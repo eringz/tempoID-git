@@ -1,5 +1,15 @@
 
+import java.awt.event.KeyEvent;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Set;
 import javax.swing.JOptionPane;
+import java.sql.ResultSetMetaData;
+import java.sql.Statement;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -16,8 +26,22 @@ public class adminRegister extends javax.swing.JFrame {
     /**
      * Creates new form adminRegister
      */
+     Connection myConnection = null;
+        Statement myStatement= null;
+        ResultSet myResult =null;
     public adminRegister() {
         initComponents();
+        connect();
+        
+    }
+    public void connect(){
+        try{
+            myConnection = DriverManager.getConnection("jdbc:derby://localhost:1527/admindatabase", "admindatabase", "admin");
+            myStatement = myConnection.createStatement();
+            myResult =myStatement.executeQuery("SELECT * FROM admindatabase.admininfo");
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -34,20 +58,21 @@ public class adminRegister extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        name = new javax.swing.JTextField();
+        cellphone = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        username = new javax.swing.JTextField();
         confirm = new javax.swing.JButton();
         cancel = new javax.swing.JButton();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jPasswordField2 = new javax.swing.JPasswordField();
+        confirmapassword = new javax.swing.JPasswordField();
+        password = new javax.swing.JPasswordField();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setBackground(new java.awt.Color(226, 242, 240));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -66,14 +91,22 @@ public class adminRegister extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("CONFIRM PASSWORD");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, -1, 34));
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 420, 30));
+        jPanel1.add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 420, 30));
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        cellphone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                cellphoneActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 370, 30));
+        cellphone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cellphoneKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cellphoneKeyTyped(evt);
+            }
+        });
+        jPanel1.add(cellphone, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 370, 30));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setText("EMAIL ADDRESS: ");
@@ -83,12 +116,12 @@ public class adminRegister extends javax.swing.JFrame {
         jLabel6.setText("PASSWORD: ");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, -1, 34));
 
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        username.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                usernameActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 210, 350, 30));
+        jPanel1.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 210, 350, 30));
 
         confirm.setText("CONFIRM");
         confirm.addActionListener(new java.awt.event.ActionListener() {
@@ -101,11 +134,13 @@ public class adminRegister extends javax.swing.JFrame {
         cancel.setText("CANCEL");
         jPanel1.add(cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 110, 30));
 
-        jPasswordField1.setText("jPasswordField1");
-        jPanel1.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 290, 310, 30));
+        confirmapassword.setText("jPasswordField1");
+        jPanel1.add(confirmapassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 290, 310, 30));
 
-        jPasswordField2.setText("jPasswordField1");
-        jPanel1.add(jPasswordField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 250, 390, 30));
+        password.setText("jPasswordField1");
+        jPanel1.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 250, 390, 30));
+
+        background.setBackground(new java.awt.Color(226, 242, 240));
         jPanel1.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 420));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -114,20 +149,80 @@ public class adminRegister extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void cellphoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cellphoneActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_cellphoneActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_usernameActionPerformed
 
     private void confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmActionPerformed
-        // TODO add your handling code here:
-        JOptionPane.showConfirmDialog(null, "Are you sure you want to continue?", "CONFIRMATION", JOptionPane.YES_NO_OPTION);
-        this.dispose();
-        new adminLogIN().setVisible(true);
+        // TODO add your handling code here: 
+        int answer;
+         answer = JOptionPane.showConfirmDialog(null, "Are you sure you want to continue?", "CONFIRMATION", JOptionPane.YES_NO_OPTION);
+         if(answer == 0){
+             String pangalan = name.getText();
+             String pass = password.getText();
+             String confirmpass = confirmapassword.getText();
+             String cp = cellphone.getText();
+             String admin = username.getText();
+             int namelength = pangalan.length();
+             int passlength = pass.length();
+             int confirmlength = confirmpass.length();
+             int cplength = cp.length();
+             int adminlength = admin.length();
+             //int cell = Integer.parseInt(cp.trim());
+             if(namelength == 0 || passlength == 0 || confirmlength==0 ||cplength==0 ||adminlength == 0 ){
+             JOptionPane.showMessageDialog(null,"Please Fill up all requirements needed.","ERROR MESSAGE",JOptionPane.ERROR_MESSAGE);
+         }else{
+               try{
+                   PreparedStatement put = myConnection.prepareStatement("insert into admindatabase.admininfo values(?,?,?,?)" );
+                   put.setString(1, admin);
+                   put.setString(2, pangalan);
+                   put.setString(3, pass);
+                   put.setString(4, cp);
+                    int row = put.executeUpdate();
+                   JOptionPane.showMessageDialog(null, "LOG IN SUCCESSFULLY!!");
+                   myConnection.close();
+                   this.dispose();
+                  // new adminLogIN().setVisible(true);
+                   new adminLogIN().show();
+               }catch(SQLException e){
+                    e.printStackTrace();          
+               }
+             }
+             
+         }
     }//GEN-LAST:event_confirmActionPerformed
+
+    private void cellphoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cellphoneKeyPressed
+        // limit the integer in 11 digits only
+        String cpnumber = cellphone.getText();
+        int length = cpnumber.length();
+     if(length<11)
+            if(length<11){
+                cellphone.setEditable(true);
+            }else{
+                cellphone.setEditable(false);
+            
+            }else{
+              if(evt.getExtendedKeyCode()==KeyEvent.VK_BACK_SPACE|| evt.getExtendedKeyCode()==KeyEvent.VK_DELETE ) {
+                    cellphone.setEditable(true);                  
+                    }else{
+                    cellphone.setEditable(false);
+                    }
+              } 
+    }//GEN-LAST:event_cellphoneKeyPressed
+
+    private void cellphoneKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cellphoneKeyTyped
+        // input should be numbers only
+        char c = evt.getKeyChar();
+        String cpText = cellphone.getText();
+        if(!Character.isDigit(c)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_cellphoneKeyTyped
 
     /**
      * @param args the command line arguments
@@ -167,7 +262,9 @@ public class adminRegister extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background;
     private javax.swing.JButton cancel;
+    private javax.swing.JTextField cellphone;
     private javax.swing.JButton confirm;
+    private javax.swing.JPasswordField confirmapassword;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -175,10 +272,8 @@ public class adminRegister extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField name;
+    private javax.swing.JPasswordField password;
+    private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 }

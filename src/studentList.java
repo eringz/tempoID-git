@@ -1,5 +1,16 @@
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import net.proteanit.sql.DbUtils;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -11,15 +22,53 @@ import javax.swing.JOptionPane;
  *
  * @author E-rinGZ
  */
+
+
 public class studentList extends javax.swing.JFrame {
 
     /**
      * Creates new form studentList
      */
+    Connection myConnection = null;
+    Statement myStatement = null;
+    ResultSet myResult = null;
     public studentList() {
         initComponents();
+        showUser();
     }
-
+    public ArrayList<User> userlist(){
+        ArrayList<User> usersList = new ArrayList<>();
+        try{
+        myConnection = DriverManager.getConnection("jdbc:derby://localhost:1527/studentdata", "student", "admin");
+        myStatement = myConnection.createStatement();
+        myResult = myStatement.executeQuery("Select * From student.data");
+        //table.setModel(DbUtils.resultSetToTableModel(myResult));
+        User user;
+        while(myResult.next()){
+            user= new User(myResult.getString("idnumber"), myResult.getString("studentnumber"), myResult.getString("lastname"),myResult.getString("firstname"), myResult.getString("middlename"), myResult.getString("course"), myResult.getString("cellphone"), myResult.getString("email"));
+            usersList.add(user);
+        }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        
+            return usersList;
+    }
+    public void showUser(){
+        ArrayList<User> list = userlist();
+        DefaultTableModel model = (DefaultTableModel) tableta.getModel();
+        Object[] row = new Object[8]; 
+        for (int i = 0 ; i<list.size() ; i++){
+            row[0] = list.get(i).getidnumber();
+            
+            row[1] = list.get(i).getstudentnumber();         
+            row[2] = list.get(i).getlastname()+ " " + list.get(i).getfirstname()+ " " + list.get(i).getmiddlename();            
+            row[3] = list.get(i).getcourse();       
+            row[4] = list.get(i).getcellphone();
+            row[5] = list.get(i).getemail();   
+            model.addRow(row);
+        }        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,12 +79,12 @@ public class studentList extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        searchtype = new javax.swing.JTextField();
         search = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableta = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        ok = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         background = new javax.swing.JLabel();
@@ -44,24 +93,28 @@ public class studentList extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 30, 230, 31));
+        jPanel1.add(searchtype, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 30, 230, 31));
 
         search.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         search.setText("SEARCH");
+        search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchActionPerformed(evt);
+            }
+        });
         jPanel1.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 30, 100, 30));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableta.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        tableta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
-                "ID #", "STUDENT #", "NAME", " YR & SEC", "ADDRESS", "CELLPHONE #", "GURDIAN NAME AND CONTACT #"
+                "ID #", "STUDENT #", "NAME", "COURSE", "CELLPHONE #", "EMAIL ADDRESS"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tableta.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jScrollPane1.setViewportView(tableta);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 920, 90));
 
@@ -70,14 +123,14 @@ public class studentList extends javax.swing.JFrame {
         jLabel1.setText("STUDENT INFORMATION");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 890, 40));
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setText("OK");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        ok.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        ok.setText("OK");
+        ok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                okActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 440, 130, 30));
+        jPanel1.add(ok, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 440, 130, 30));
 
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton2.setText("CANCEL");
@@ -105,12 +158,39 @@ public class studentList extends javax.swing.JFrame {
         new studentReg().setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okActionPerformed
         // TODO add your handling code here:
         JOptionPane.showConfirmDialog(null, "Are you sure you want to continue?", "CONFIRMATION", JOptionPane.YES_NO_OPTION);
-        this.dispose();
-        new idOutput().setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        idOutput input = new idOutput();
+        DefaultTableModel mod = (DefaultTableModel) tableta.getModel();
+        int selecta = tableta.getSelectedRow();
+         input.studentn.setText( mod.getValueAt(selecta, 1).toString());
+        //String info = input.idnumber.getText();
+        String info = mod.getValueAt(selecta, 1).toString();
+        // idOutput.cdm.setText(get);
+       // System.out.println(info);     
+        this.hide();
+        new idOutput(info).show(); 
+    }//GEN-LAST:event_okActionPerformed
+
+    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
+        
+        String sql = "SELECT ALL FROM student.data"+searchtype.getText();     
+        try {
+            // TODO add your handling code here:
+            myConnection = DriverManager.getConnection("jdbc:derby://localhost:1527/studentdata", "student", "admin");
+            myStatement = myConnection.createStatement();
+            myResult = myStatement.executeQuery(sql);
+            if(myResult.next()){
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(studentList.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+      
+    }//GEN-LAST:event_searchActionPerformed
 
     /**
      * @param args the command line arguments
@@ -149,14 +229,14 @@ public class studentList extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    public static javax.swing.JButton ok;
     private javax.swing.JButton search;
+    private javax.swing.JTextField searchtype;
+    public static javax.swing.JTable tableta;
     // End of variables declaration//GEN-END:variables
 }

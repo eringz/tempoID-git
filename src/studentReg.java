@@ -1,5 +1,38 @@
 
+import java.awt.Color;
+import java.io.File;
+import javafx.stage.FileChooser;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.Timer;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.Icon;
+
+
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -10,14 +43,83 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author E-rinGZ
- */
+ */ 
+
 public class studentReg extends javax.swing.JFrame {
 
     /**
      * Creates new form studentReg
      */
+    Connection myConnection = null;
+    Statement myStatement = null;
+    ResultSet myResult = null;
+    
+    
+    
     public studentReg() {
         initComponents();
+        photoption.setVisible(false);
+        jPanel1.setFocusable(true);
+        petsaPakita();
+        orasPakita();
+        connect();
+      
+         String ako = "SELECT MAX(idnumber) FROM student.data";
+         try{
+              Statement add = myConnection.createStatement();
+                 ResultSet rs = add.executeQuery(ako);
+                 if (rs.next()){
+                       String id = rs.getString(1);
+                     System.out.println(id);
+                     
+                     StringBuffer buff = new StringBuffer(id);
+                     buff.delete(0, 4);
+                     String a = buff.toString();
+                     int b = Integer.parseInt(a);
+                     int c = b + 1;
+                    String d = String.valueOf(c);
+                    String e = "CDM-"+c;
+                    idnumber.setText(e);                  
+            }
+         } catch (SQLException ex) {
+            Logger.getLogger(studentReg.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+  
+    public void connect(){
+        try{
+            myConnection = DriverManager.getConnection("jdbc:derby://localhost:1527/studentdata", "student", "admin");
+            myStatement = myConnection.createStatement();
+            myResult = myStatement.executeQuery("Select * From student.data");
+            
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    void petsaPakita(){
+        SimpleDateFormat style = new SimpleDateFormat("MMM dd yyyy");
+        Date petsa = new Date();
+        date.setText(style.format(petsa));
+        
+    }
+    void orasPakita() {
+        new Timer(0, new ActionListener()  {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss a");
+                Date datenow = new Date();
+                time.setText(format.format(datenow));
+            }
+
+        }).start();
+    }
+   public ImageIcon resizeImage(String ImagePath){
+        ImageIcon MyImage = new ImageIcon(ImagePath); 
+        Image img = MyImage.getImage();
+        Image newImg = img.getScaledInstance(photo.getWidth(), photo.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon image = new ImageIcon(newImg);
+        return image;
     }
 
     /**
@@ -30,89 +132,319 @@ public class studentReg extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        photoption = new javax.swing.JPanel();
+        upload = new javax.swing.JButton();
+        camera = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        last = new javax.swing.JLabel();
+        middle = new javax.swing.JLabel();
+        elabel = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        guardl = new javax.swing.JLabel();
+        first = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        guardf = new javax.swing.JLabel();
+        guardm = new javax.swing.JLabel();
+        studentnumber = new javax.swing.JTextField();
+        middlename = new javax.swing.JTextField();
+        cellphone = new javax.swing.JTextField();
+        guardianLast = new javax.swing.JTextField();
+        guardianFirst = new javax.swing.JTextField();
+        guardianM = new javax.swing.JTextField();
+        email = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        address = new javax.swing.JTextArea();
         ok = new javax.swing.JButton();
         cancel = new javax.swing.JButton();
+        photo = new javax.swing.JLabel();
+        lastname = new javax.swing.JTextField();
+        firstname = new javax.swing.JTextField();
+        course = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        time = new javax.swing.JLabel();
+        idnumber = new javax.swing.JLabel();
+        date = new javax.swing.JLabel();
+        guardianContact = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jlabel14 = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setBackground(new java.awt.Color(226, 242, 240));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        photoption.setBackground(new java.awt.Color(247, 252, 252));
+        photoption.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(191, 225, 223), new java.awt.Color(231, 243, 242), new java.awt.Color(74, 195, 192), new java.awt.Color(146, 206, 200)));
+        photoption.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        upload.setBackground(new java.awt.Color(236, 242, 243));
+        upload.setText("UPLOAD PHOTO");
+        upload.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(180, 255, 255), new java.awt.Color(207, 255, 255), new java.awt.Color(162, 255, 255), new java.awt.Color(191, 255, 255)));
+        upload.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                uploadMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                uploadMouseExited(evt);
+            }
+        });
+        upload.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                uploadActionPerformed(evt);
+            }
+        });
+        photoption.add(upload, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 5, 180, 30));
+
+        camera.setBackground(new java.awt.Color(238, 244, 244));
+        camera.setText("CAMERA");
+        photoption.add(camera, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 160, -1));
+
+        jPanel1.add(photoption, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 250, 190, 70));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("STUDENT FILL-UP SECTION");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, 475, 36));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 475, 36));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setText("STUDENT #");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 95, 26));
+        jLabel2.setText("STUDENT NUMBER");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 150, 26));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("NAME");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 95, 26));
+        last.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        last.setForeground(new java.awt.Color(204, 204, 204));
+        last.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        last.setText("LAST NAME");
+        jPanel1.add(last, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, 90, 26));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setText("GURDIAN CONTACT #");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 170, 26));
+        middle.setBackground(new java.awt.Color(204, 204, 204));
+        middle.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        middle.setForeground(new java.awt.Color(204, 204, 204));
+        middle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        middle.setText("MIDDLE NAME");
+        jPanel1.add(middle, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, 110, 26));
+
+        elabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        elabel.setForeground(new java.awt.Color(204, 204, 204));
+        elabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        elabel.setText("emailaddressexample@gmail.com");
+        jPanel1.add(elabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, 260, 26));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel5.setText("YEAR & SEC");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 95, 26));
+        jLabel5.setText("COURSE YR & SEC");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 160, 26));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setText("ADDRESS");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 95, 26));
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel7.setText("CELLPHONE #");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 110, 26));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 95, 26));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel8.setText("GURDIAN NAME");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 130, 26));
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 620, 30));
-        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 130, 620, 30));
-        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 170, 620, 30));
-        jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 210, 620, 30));
-        jPanel1.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 250, 620, 30));
-        jPanel1.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 580, 30));
+        jLabel8.setText("EMAIL ADDRESS");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 160, 26));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel7.setText("CELLPHONE NUMBER");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 160, 26));
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 350, 660, 140));
+        guardl.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        guardl.setForeground(new java.awt.Color(204, 204, 204));
+        guardl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        guardl.setText("LAST NAME");
+        jPanel1.add(guardl, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 310, 130, 26));
+
+        first.setBackground(new java.awt.Color(204, 204, 204));
+        first.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        first.setForeground(new java.awt.Color(204, 204, 204));
+        first.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        first.setText("FIRST NAME");
+        jPanel1.add(first, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, 140, 26));
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel14.setText("GURDIAN NAME");
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 130, 26));
+
+        guardf.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        guardf.setForeground(new java.awt.Color(204, 204, 204));
+        guardf.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        guardf.setText("FIRST NAME");
+        jPanel1.add(guardf, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 310, 120, 26));
+
+        guardm.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        guardm.setForeground(new java.awt.Color(204, 204, 204));
+        guardm.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        guardm.setText("MIDDLE NAME");
+        jPanel1.add(guardm, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 310, 130, 26));
+
+        studentnumber.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                studentnumberKeyPressed(evt);
+            }
+        });
+        jPanel1.add(studentnumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, 230, 30));
+
+        middlename.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                middlenameKeyTyped(evt);
+            }
+        });
+        jPanel1.add(middlename, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, 120, 30));
+
+        cellphone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cellphoneKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cellphoneKeyTyped(evt);
+            }
+        });
+        jPanel1.add(cellphone, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 210, 170, 30));
+
+        guardianLast.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                guardianLastKeyTyped(evt);
+            }
+        });
+        jPanel1.add(guardianLast, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 310, 120, 30));
+
+        guardianFirst.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                guardianFirstKeyTyped(evt);
+            }
+        });
+        jPanel1.add(guardianFirst, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 310, 170, 30));
+
+        guardianM.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                guardianMKeyTyped(evt);
+            }
+        });
+        jPanel1.add(guardianM, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 310, 110, 30));
+
+        email.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                emailKeyTyped(evt);
+            }
+        });
+        jPanel1.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 270, 290, 30));
+
+        address.setColumns(20);
+        address.setRows(5);
+        jScrollPane1.setViewportView(address);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 390, 660, 100));
 
         ok.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        ok.setText("OK");
+        ok.setText("SUBMIT");
         ok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 okActionPerformed(evt);
             }
         });
-        jPanel1.add(ok, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 520, 130, 30));
+        jPanel1.add(ok, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 500, 130, 30));
 
         cancel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cancel.setText("CANCEL");
-        jPanel1.add(cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 520, 130, 30));
-        jPanel1.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, 570));
+        cancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 530, 130, 30));
+
+        photo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        photo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imahe/editAsset 1.png"))); // NOI18N
+        photo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                photoMouseClicked(evt);
+            }
+        });
+        jPanel1.add(photo, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 90, 160, 120));
+
+        lastname.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                lastnameFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                lastnameFocusLost(evt);
+            }
+        });
+        lastname.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                lastnameKeyTyped(evt);
+            }
+        });
+        jPanel1.add(lastname, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, 110, 30));
+
+        firstname.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                firstnameKeyTyped(evt);
+            }
+        });
+        jPanel1.add(firstname, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, 170, 30));
+
+        course.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        course.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECT COURSE", "BSCPE2A", "BSCPE2B", "BSCPE2C", "BSCPE2D" }));
+        course.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                courseActionPerformed(evt);
+            }
+        });
+        jPanel1.add(course, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 170, 150, 30));
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel9.setText("Please input 11 digit number");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 350, 190, 30));
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel10.setText("example 21-00123");
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 80, 120, 30));
+
+        time.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        time.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        time.setText("TIME");
+        jPanel1.add(time, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 540, 120, -1));
+
+        idnumber.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        idnumber.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        idnumber.setText("CDM-2100001");
+        jPanel1.add(idnumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 30, 120, -1));
+
+        date.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        date.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        date.setText("DATE ISSUANCE");
+        jPanel1.add(date, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 510, 120, -1));
+
+        guardianContact.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                guardianContactKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                guardianContactKeyTyped(evt);
+            }
+        });
+        jPanel1.add(guardianContact, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 350, 170, 30));
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel11.setText("Please input 11 digit number");
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 210, 190, 30));
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel12.setText("GURDIAN CONTACT #");
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 160, 26));
+
+        jlabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jlabel14.setText("STUDENT NAME");
+        jPanel1.add(jlabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 140, 26));
+
+        background.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jPanel1.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 810, 570));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -122,10 +454,284 @@ public class studentReg extends javax.swing.JFrame {
 
     private void okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showConfirmDialog(null, "Are you sure you want to continue?", "CONFIRMATION", JOptionPane.YES_NO_OPTION);
-        this.dispose();
-        new studentList().setVisible(true);
+        int answer;
+        answer = JOptionPane.showConfirmDialog(null, "Are you sure you want to continue?", "CONFIRMATION", JOptionPane.YES_NO_OPTION);     
+        if(answer==0){
+            String idno = idnumber.getText();
+            String petsa = date.getText();            
+            String oras = time.getText();          
+            Date date = new Date();
+            java.sql.Date dql =new java.sql.Date(date.getTime());
+            Date time = new Date();
+            java.sql.Time tql = new java.sql.Time(time.getTime());
+            String studentno = studentnumber.getText();
+            String ln = lastname.getText().toUpperCase();
+            String fn = firstname.getText().toUpperCase();
+            String m = middlename.getText().toUpperCase();
+            String kurso = course.getSelectedItem().toString();
+            String cell = cellphone.getText();           
+            String guardianLN = guardianLast.getText().toUpperCase();
+            String guardianFN = guardianFirst.getText().toUpperCase();
+            String guardianMid = guardianM.getText().toUpperCase();
+            String contact = guardianContact.getText();
+            String eadd = email.getText();
+            String add = address.getText().toUpperCase();
+            String pic = photo.getName();
+            System.out.println(pic);
+            int stdnolength = studentno.length();
+            int lnlength = ln.length();
+            int fnlength = fn.length();
+            int mlength = m.length();
+            int clength = cell.length();
+            int gLNlength = guardianLN.length();
+            int gFNlength = guardianFN.length();
+            int gMlength = guardianMid.length();
+            int contactlength = contact.length();
+            int eadlength = eadd.length();
+            int addlength = add.length();
+            if(stdnolength == 0 || lnlength == 0 || fnlength == 0 || mlength == 0 || clength==0 ||gLNlength ==0
+                   ||gFNlength == 0 || gMlength == 0 || contactlength == 0 || eadlength == 0 ||addlength==0
+                    || kurso.contains("SELECT COURSE")){
+                JOptionPane.showMessageDialog(null,"Please Fill up all requirements needed.","ERROR MESSAGE",JOptionPane.ERROR_MESSAGE);
+            }
+               
+            try {
+                PreparedStatement put = myConnection.prepareStatement("insert into student.data values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+               put.setString(1, idno);
+               put.setDate(2,dql);  
+               put.setString(3, studentno);
+               put.setString(4, ln);
+               put.setString(5,fn);
+               put.setString(6, m);
+               put.setString(7, cell);
+               put.setString(8, kurso);
+               put.setString(9, guardianLN);
+               put.setString(10, guardianFN);
+               put.setString(11, guardianMid);
+               put.setString(12, contact);
+               put.setString(13, eadd);
+               put.setString(14, add);   
+               put.setTime(15,tql);
+                try {
+                    FileInputStream fis = new FileInputStream(pic);
+                    try {
+                        put.setBinaryStream(16, fis,fis.available());
+                    } catch (IOException ex) {
+                        Logger.getLogger(studentReg.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(studentReg.class.getName()).log(Level.SEVERE, null, ex);
+                }           
+               int row = put.executeUpdate();
+               myConnection.close();
+               JOptionPane.showMessageDialog(this, "Registered");
+               this.dispose();
+               new studentList().show();              
+                }catch (SQLException ex) {
+                  Logger.getLogger(practice1.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null,"Hnapin ang error!!","ERROR MESSAGE",JOptionPane.ERROR_MESSAGE);                        
+            }
+        }else{
+            JOptionPane.showMessageDialog(null,"Piniling Manatili");
+        }
+        
     }//GEN-LAST:event_okActionPerformed
+
+    private void photoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_photoMouseClicked
+        // TODO add your handling code here:    
+       
+            photoption.setVisible(true); 
+          
+            
+    }//GEN-LAST:event_photoMouseClicked
+
+    private void uploadMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uploadMouseEntered
+        // TODO add your handling code here:
+        upload.setBackground(new Color(0,0,0));
+        upload.setForeground(new Color(226,242,240));
+    }//GEN-LAST:event_uploadMouseEntered
+
+    private void uploadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uploadActionPerformed
+        // TODO add your handling code here:
+        JFileChooser file = new JFileChooser();
+        file.setCurrentDirectory(new File(System.getProperty("user.home")));
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images","jpg", "gif", "png");
+        file.addChoosableFileFilter(filter);
+        int result = file.showSaveDialog(null);
+        if(result == JFileChooser.APPROVE_OPTION){
+            File selectedFile = file.getSelectedFile();
+            String path = selectedFile.getAbsolutePath();
+            photo.setIcon(resizeImage(path));        
+            photoption.hide();
+            photo.setName(path);
+        }else if(result== JFileChooser.CANCEL_OPTION){
+            JOptionPane.showMessageDialog(null,"DI KA PUMILI","ERROR MESSAGE",JOptionPane.ERROR_MESSAGE);
+            photoption.hide();
+        }
+        
+    }//GEN-LAST:event_uploadActionPerformed
+
+    private void uploadMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uploadMouseExited
+        // TODO add your handling code here:
+        upload.setBackground(new Color(226,242,240));
+        upload.setForeground(new Color(0,0,0));
+    }//GEN-LAST:event_uploadMouseExited
+
+    private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
+        // TODO add your handling code here:     
+        this.dispose();
+        new studentList().show();
+    }//GEN-LAST:event_cancelActionPerformed
+
+    private void cellphoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cellphoneKeyPressed
+        // TODO add your handling code here:
+           String cpnumber = cellphone.getText();
+        int length = cpnumber.length();
+     if(length<11)
+            if(length<11){
+                cellphone.setEditable(true);
+            }else{
+                cellphone.setEditable(false);
+            
+            }else{
+              if(evt.getExtendedKeyCode()==KeyEvent.VK_BACK_SPACE|| evt.getExtendedKeyCode()==KeyEvent.VK_DELETE ) {
+                    cellphone.setEditable(true);                  
+                    }else{
+                    cellphone.setEditable(false);
+                    }
+              } 
+    }//GEN-LAST:event_cellphoneKeyPressed
+
+    private void cellphoneKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cellphoneKeyTyped
+        // TODO add your handling code here:
+         char c = evt.getKeyChar();
+        String cpText = cellphone.getText();
+        if(!Character.isDigit(c)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_cellphoneKeyTyped
+
+    private void lastnameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lastnameKeyTyped
+        // TODO add your handling code here:
+        String ln = lastname.getText();
+        if(ln.contains(ln)){   
+            last.hide();    
+        }   
+       // last.hide();
+    }//GEN-LAST:event_lastnameKeyTyped
+
+    private void lastnameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lastnameFocusLost
+        // TODO add your handling code here:
+        String ln = lastname.getText();
+        if(ln.contains("")){
+            last.show();
+                if(ln.contains(ln)){
+                    last.hide();
+                }
+        }
+    }//GEN-LAST:event_lastnameFocusLost
+
+    private void lastnameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lastnameFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lastnameFocusGained
+
+    private void firstnameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_firstnameKeyTyped
+        // TODO add your handling code here:
+        String fn = firstname.getText();
+        if(fn.contains(fn)){
+            first.hide();
+        }
+    }//GEN-LAST:event_firstnameKeyTyped
+
+    private void middlenameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_middlenameKeyTyped
+        // TODO add your handling code here:
+        String m = middlename.getText();
+        if(m.contains(m)){
+            middle.hide();
+        }
+    }//GEN-LAST:event_middlenameKeyTyped
+
+    private void guardianLastKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_guardianLastKeyTyped
+        // TODO add your handling code here:
+        String gl = guardianLast.getText();
+        if(gl.contains(gl)){
+            guardl.hide();
+        }
+    }//GEN-LAST:event_guardianLastKeyTyped
+
+    private void guardianFirstKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_guardianFirstKeyTyped
+        // TODO add your handling code here:
+        String gf = guardianFirst.getText();
+        if(gf.contains(gf)){
+            guardf.hide();
+        }
+    }//GEN-LAST:event_guardianFirstKeyTyped
+
+    private void guardianMKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_guardianMKeyTyped
+        // TODO add your handling code here:
+        String gm = guardianM.getText();
+        if(gm.contains(gm)){
+            guardm.hide();
+        }
+    }//GEN-LAST:event_guardianMKeyTyped
+
+    private void guardianContactKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_guardianContactKeyPressed
+        // TODO add your handling code here:
+           String gn = guardianContact.getText();
+        int length = gn.length();
+     if(length<11)
+            if(length<11){
+                guardianContact.setEditable(true);
+            }else{
+                guardianContact.setEditable(false);
+            
+            }else{
+              if(evt.getExtendedKeyCode()==KeyEvent.VK_BACK_SPACE|| evt.getExtendedKeyCode()==KeyEvent.VK_DELETE ) {
+                    guardianContact.setEditable(true);                  
+                    }else{
+                    guardianContact.setEditable(false);
+                    }
+              } 
+    }//GEN-LAST:event_guardianContactKeyPressed
+
+    private void guardianContactKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_guardianContactKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if(!Character.isDigit(c)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_guardianContactKeyTyped
+
+    private void emailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailKeyTyped
+        // TODO add your handling code here:
+        String el = email.getText();
+        if(el.contains(el)){
+            elabel.hide();
+        }
+    }//GEN-LAST:event_emailKeyTyped
+
+    private void studentnumberKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_studentnumberKeyPressed
+        // TODO add your handling code here:
+            String sn = studentnumber.getText();
+        int length = sn.length();
+     if(length<8)
+            if(length<8){
+                studentnumber.setEditable(true);
+            }else{
+                studentnumber.setEditable(false);
+            
+            }else{
+              if(evt.getExtendedKeyCode()==KeyEvent.VK_BACK_SPACE|| evt.getExtendedKeyCode()==KeyEvent.VK_DELETE ) {
+                    studentnumber.setEditable(true);                  
+                    }else{
+                    studentnumber.setEditable(false);
+                    }
+              } 
+    }//GEN-LAST:event_studentnumberKeyPressed
+
+    private void courseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_courseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -163,25 +769,48 @@ public class studentReg extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea address;
     private javax.swing.JLabel background;
+    private javax.swing.JButton camera;
     private javax.swing.JButton cancel;
+    private javax.swing.JTextField cellphone;
+    private javax.swing.JComboBox<String> course;
+    private javax.swing.JLabel date;
+    private javax.swing.JLabel elabel;
+    private javax.swing.JTextField email;
+    private javax.swing.JLabel first;
+    private javax.swing.JTextField firstname;
+    private javax.swing.JLabel guardf;
+    private javax.swing.JTextField guardianContact;
+    private javax.swing.JTextField guardianFirst;
+    private javax.swing.JTextField guardianLast;
+    private javax.swing.JTextField guardianM;
+    private javax.swing.JLabel guardl;
+    private javax.swing.JLabel guardm;
+    private javax.swing.JLabel idnumber;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
+    private javax.swing.JLabel jlabel14;
+    private javax.swing.JLabel last;
+    private javax.swing.JTextField lastname;
+    private javax.swing.JLabel middle;
+    private javax.swing.JTextField middlename;
     private javax.swing.JButton ok;
+    private javax.swing.JLabel photo;
+    private javax.swing.JPanel photoption;
+    private javax.swing.JTextField studentnumber;
+    private javax.swing.JLabel time;
+    private javax.swing.JButton upload;
     // End of variables declaration//GEN-END:variables
 }
