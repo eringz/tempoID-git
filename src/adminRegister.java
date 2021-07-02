@@ -1,5 +1,8 @@
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.RoundRectangle2D;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,6 +13,8 @@ import java.util.Set;
 import javax.swing.JOptionPane;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -32,17 +37,39 @@ public class adminRegister extends javax.swing.JFrame {
     public adminRegister() {
         initComponents();
         connect();
-        
+        //back.setBackground(new Color(0,0,0,0));
+        String ako = "SELECT MAX(id) FROM administrator";
+         try{
+             Statement add = myConnection.createStatement();
+                 ResultSet rs = add.executeQuery(ako);
+                 if (rs.next()){
+                       String me = rs.getString(1);
+                     System.out.println(me);
+                     
+                     StringBuffer buff = new StringBuffer(me);
+                     buff.delete(0, 6);
+                     String a = buff.toString();
+                     int b = Integer.parseInt(a);
+                     int c = b + 1;
+                    String d = String.valueOf(c);
+                    String e = "ADMIN-0000"+c;
+                    id.setText(e);  
+                                   
+            }
+         } catch (SQLException ex) {
+            Logger.getLogger(studentReg.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public void connect(){
         try{
-            myConnection = DriverManager.getConnection("jdbc:derby://localhost:1527/admindatabase", "admindatabase", "admin");
+            myConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/temporaryid", "root", "");
             myStatement = myConnection.createStatement();
-            myResult =myStatement.executeQuery("SELECT * FROM admindatabase.admininfo");
+            myResult =myStatement.executeQuery("SELECT * FROM administrator");
         }catch(SQLException e){
             e.printStackTrace();
         }
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -54,134 +81,449 @@ public class adminRegister extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        cpa = new javax.swing.JLabel();
+        pas = new javax.swing.JLabel();
+        cont = new javax.swing.JLabel();
+        apel = new javax.swing.JLabel();
+        ema = new javax.swing.JLabel();
+        git = new javax.swing.JLabel();
+        pang = new javax.swing.JLabel();
+        firstname = new javax.swing.JTextField();
+        email = new javax.swing.JTextField();
+        contact = new javax.swing.JTextField();
+        password = new javax.swing.JTextField();
+        suffix = new javax.swing.JTextField();
+        confirm = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        register = new javax.swing.JButton();
+        last = new javax.swing.JTextField();
+        middlename = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        name = new javax.swing.JTextField();
-        cellphone = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        username = new javax.swing.JTextField();
-        confirm = new javax.swing.JButton();
-        cancel = new javax.swing.JButton();
-        confirmapassword = new javax.swing.JPasswordField();
-        password = new javax.swing.JPasswordField();
-        background = new javax.swing.JLabel();
+        back = new javax.swing.JButton();
+        id = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(226, 242, 240));
+        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("ADMIN REGISTRATION");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, 261, 44));
+        cpa.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        cpa.setForeground(new java.awt.Color(204, 204, 204));
+        cpa.setText(" CONFIRM PASSWORD");
+        jPanel1.add(cpa, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 210, 40));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setText("NAME");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 61, 35));
+        pas.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        pas.setForeground(new java.awt.Color(204, 204, 204));
+        pas.setText(" PASSWORD");
+        jPanel1.add(pas, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 210, 40));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("CELLPHONE #");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 114, 42));
+        cont.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        cont.setForeground(new java.awt.Color(204, 204, 204));
+        cont.setText(" CONTACT");
+        jPanel1.add(cont, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 280, 170, 40));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setText("CONFIRM PASSWORD");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, -1, 34));
-        jPanel1.add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 420, 30));
+        apel.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        apel.setForeground(new java.awt.Color(204, 204, 204));
+        apel.setText(" LAST NAME");
+        jPanel1.add(apel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 180, 40));
 
-        cellphone.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cellphoneActionPerformed(evt);
+        ema.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        ema.setForeground(new java.awt.Color(204, 204, 204));
+        ema.setText(" EMAIL ADDRESS");
+        jPanel1.add(ema, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 270, 40));
+
+        git.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        git.setForeground(new java.awt.Color(204, 204, 204));
+        git.setText(" MIDDLE NAME");
+        jPanel1.add(git, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 230, 40));
+
+        pang.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        pang.setForeground(new java.awt.Color(204, 204, 204));
+        pang.setText(" FIRST NAME");
+        jPanel1.add(pang, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 170, 180, 40));
+
+        firstname.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        firstname.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                firstnameFocusGained(evt);
             }
         });
-        cellphone.addKeyListener(new java.awt.event.KeyAdapter() {
+        firstname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                firstnameActionPerformed(evt);
+            }
+        });
+        jPanel1.add(firstname, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 170, 240, 40));
+
+        email.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        email.setToolTipText("");
+        email.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, null, new java.awt.Color(25, 25, 30), null, null));
+        email.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                emailFocusGained(evt);
+            }
+        });
+        email.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emailActionPerformed(evt);
+            }
+        });
+        jPanel1.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 310, 40));
+
+        contact.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        contact.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, null, new java.awt.Color(5, 5, 6), null, null));
+        contact.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                contactFocusGained(evt);
+            }
+        });
+        contact.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contactActionPerformed(evt);
+            }
+        });
+        contact.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                cellphoneKeyPressed(evt);
+                contactKeyPressed(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                cellphoneKeyTyped(evt);
+                contactKeyTyped(evt);
             }
         });
-        jPanel1.add(cellphone, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 370, 30));
+        jPanel1.add(contact, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 280, 200, 40));
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel5.setText("EMAIL ADDRESS: ");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, -1, 34));
-
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel6.setText("PASSWORD: ");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, -1, 34));
-
-        username.addActionListener(new java.awt.event.ActionListener() {
+        password.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        password.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        password.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                passwordFocusGained(evt);
+            }
+        });
+        password.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usernameActionPerformed(evt);
+                passwordActionPerformed(evt);
             }
         });
-        jPanel1.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 210, 350, 30));
+        jPanel1.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 440, 40));
 
-        confirm.setText("CONFIRM");
+        suffix.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        suffix.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, null, new java.awt.Color(22, 24, 28), null, null));
+        suffix.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                suffixActionPerformed(evt);
+            }
+        });
+        jPanel1.add(suffix, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 220, 70, 40));
+
+        confirm.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        confirm.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        confirm.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                confirmFocusGained(evt);
+            }
+        });
         confirm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 confirmActionPerformed(evt);
             }
         });
-        jPanel1.add(confirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 370, 110, 30));
+        jPanel1.add(confirm, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 440, 40));
 
-        cancel.setText("CANCEL");
-        jPanel1.add(cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 110, 30));
+        jLabel2.setFont(new java.awt.Font("Lucida Sans", 1, 36)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(1, 4, 25));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("ADMIN REGISTRATION");
+        jLabel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, null, new java.awt.Color(3, 13, 39), null, null));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 560, 50));
 
-        confirmapassword.setText("jPasswordField1");
-        jPanel1.add(confirmapassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 290, 310, 30));
+        register.setBackground(new java.awt.Color(37, 151, 17));
+        register.setFont(new java.awt.Font("Lucida Sans", 0, 24)); // NOI18N
+        register.setForeground(new java.awt.Color(255, 255, 255));
+        register.setText("SIGN UP");
+        register.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(247, 249, 251), new java.awt.Color(18, 24, 19), new java.awt.Color(242, 242, 247), new java.awt.Color(16, 181, 46)));
+        register.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerActionPerformed(evt);
+            }
+        });
+        jPanel1.add(register, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 460, 310, 50));
 
-        password.setText("jPasswordField1");
-        jPanel1.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 250, 390, 30));
+        last.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        last.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, null, new java.awt.Color(22, 24, 28), null, null));
+        last.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                lastFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                lastFocusLost(evt);
+            }
+        });
+        last.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lastActionPerformed(evt);
+            }
+        });
+        jPanel1.add(last, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 280, 40));
 
-        background.setBackground(new java.awt.Color(226, 242, 240));
-        jPanel1.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 420));
+        middlename.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        middlename.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, null, new java.awt.Color(22, 24, 28), null, null));
+        middlename.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                middlenameFocusGained(evt);
+            }
+        });
+        middlename.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                middlenameActionPerformed(evt);
+            }
+        });
+        jPanel1.add(middlename, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 280, 40));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jLabel3.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        jLabel3.setText("SUFFIX");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 220, 70, 40));
+
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imahe/1x/logoAsset 8.png"))); // NOI18N
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, 190, 80));
+
+        back.setBackground(new java.awt.Color(255, 102, 102));
+        back.setLabel("CANCEL");
+        back.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                backMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                backMouseExited(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                backMouseReleased(evt);
+            }
+        });
+        back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backActionPerformed(evt);
+            }
+        });
+        back.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                backPropertyChange(evt);
+            }
+        });
+        jPanel1.add(back, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 520, 250, 50));
+
+        id.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        id.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        id.setText("ADMIN-00001");
+        jPanel1.add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 70, 140, 40));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imahe/1x/greenback2Asset 6.png"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 600));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 600));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cellphoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cellphoneActionPerformed
+    private void firstnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstnameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cellphoneActionPerformed
+    }//GEN-LAST:event_firstnameActionPerformed
 
-    private void usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameActionPerformed
+    private void contactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_usernameActionPerformed
+    }//GEN-LAST:event_contactActionPerformed
+
+    private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordActionPerformed
+
+    private void suffixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_suffixActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_suffixActionPerformed
+
+    private void lastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lastActionPerformed
+
+    private void middlenameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_middlenameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_middlenameActionPerformed
+
+    private void backPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_backPropertyChange
+
+    }//GEN-LAST:event_backPropertyChange
+
+    private void backMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backMouseEntered
+       // back.setBackground(new Color(37,151,17));
+    }//GEN-LAST:event_backMouseEntered
+
+    private void backMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backMouseReleased
+        
+
+    }//GEN-LAST:event_backMouseReleased
+
+    private void backMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backMouseExited
+       // back.setBackground(new Color(0,0,0,0));
+    }//GEN-LAST:event_backMouseExited
+
+    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
+        new adminLogIN().show();
+        this.dispose();
+    }//GEN-LAST:event_backActionPerformed
+
+    private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_emailActionPerformed
+
+    private void contactKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_contactKeyPressed
+         String cpnumber = contact.getText();
+        int length = cpnumber.length();
+     if(length<11)
+            if(length<11){
+                contact.setEditable(true);
+            }else{
+                contact.setEditable(false);
+            
+            }else{
+              if(evt.getExtendedKeyCode()==KeyEvent.VK_BACK_SPACE|| evt.getExtendedKeyCode()==KeyEvent.VK_DELETE ) {
+                    contact.setEditable(true);                  
+                    }else{
+                    contact.setEditable(false);
+                    }
+              } 
+    }//GEN-LAST:event_contactKeyPressed
+
+    private void contactKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_contactKeyTyped
+            char c = evt.getKeyChar();
+        String cpText = contact.getText();
+        if(!Character.isDigit(c)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_contactKeyTyped
+
+    private void lastFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lastFocusLost
+       String ln = last.getText();
+        if(ln.contains("")){
+            last.show();
+                if(ln.contains(ln)){
+                    apel.hide();
+                }
+        }
+    }//GEN-LAST:event_lastFocusLost
+
+    private void lastFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lastFocusGained
+        String ln = last.getText();
+        if(ln.contains(ln)){
+            apel.show();
+                if(ln.contains("")){
+                    apel.hide();
+                }
+        }
+    }//GEN-LAST:event_lastFocusGained
+
+    private void firstnameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_firstnameFocusGained
+           String fn = firstname.getText();
+        if(fn.contains("")){
+            pang.show();
+                if(fn.contains(fn)){
+                    pang.hide();
+                }
+        }
+    }//GEN-LAST:event_firstnameFocusGained
+
+    private void middlenameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_middlenameFocusGained
+           String mn = middlename.getText();
+        if(mn.contains("")){
+            git.show();
+                if(mn.contains(mn)){
+                    git.hide();
+                }
+        }
+    }//GEN-LAST:event_middlenameFocusGained
+
+    private void emailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailFocusGained
+             String eadd = email.getText();
+        if(eadd.contains("")){
+            ema.show();
+                if(eadd.contains(eadd)){
+                    ema.hide();
+                }
+        }
+    }//GEN-LAST:event_emailFocusGained
+
+    private void contactFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_contactFocusGained
+                String cp = contact.getText();
+        if(cp.contains("")){
+            cont.show();
+                if(cp.contains(cp)){
+                    cont.hide();
+                }
+        }
+    }//GEN-LAST:event_contactFocusGained
 
     private void confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmActionPerformed
-        // TODO add your handling code here: 
-        int answer;
-         answer = JOptionPane.showConfirmDialog(null, "Are you sure you want to continue?", "CONFIRMATION", JOptionPane.YES_NO_OPTION);
-         if(answer == 0){
-             String pangalan = name.getText();
-             String pass = password.getText();
-             String confirmpass = confirmapassword.getText();
-             String cp = cellphone.getText();
-             String admin = username.getText();
-             int namelength = pangalan.length();
-             int passlength = pass.length();
-             int confirmlength = confirmpass.length();
-             int cplength = cp.length();
-             int adminlength = admin.length();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_confirmActionPerformed
+
+    private void passwordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_passwordFocusGained
+                 String pa = password.getText();
+        if(pa.contains("")){
+            pas.show();
+                if(pa.contains(pa)){
+                    pas.hide();
+                }
+        }
+    }//GEN-LAST:event_passwordFocusGained
+
+    private void confirmFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_confirmFocusGained
+                  String con = confirm.getText();
+        if(con.contains("")){
+            cpa.show();
+                if(con.contains(con)){
+                    cpa.hide();
+                }
+        }
+    }//GEN-LAST:event_confirmFocusGained
+
+    private void registerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerActionPerformed
+        String admin = id.getText();
+        String lastn = last.getText().toUpperCase();
+        String first = firstname.getText().toUpperCase();
+        String middle = middlename.getText().toUpperCase();
+        String suff = suffix.getText().toUpperCase();
+        String lastname = lastn + suff;
+        String emailadd = email.getText();
+        String contactnumber = contact.getText();
+        String pass1 = password.getText();
+        String pass2 = confirm.getText();
+        
+        int lastlength = lastn.length();
+        int firstlength = first.length();
+        int middlelength = middle.length();
+        int emaillength = emailadd.length();
+        int contlength = contactnumber.length();
+        
              //int cell = Integer.parseInt(cp.trim());
-             if(namelength == 0 || passlength == 0 || confirmlength==0 ||cplength==0 ||adminlength == 0 ){
+         if(!pass1.contentEquals(pass2)){
+                 JOptionPane.showMessageDialog(null,"PLEASE CONFIRM PASSWORD","ERROR MESSAGE",JOptionPane.ERROR_MESSAGE);
+         }else if(lastlength == 0 || firstlength == 0 || middlelength==0 ||emaillength==0 ||contlength == 0){
              JOptionPane.showMessageDialog(null,"Please Fill up all requirements needed.","ERROR MESSAGE",JOptionPane.ERROR_MESSAGE);
          }else{
                try{
-                   PreparedStatement put = myConnection.prepareStatement("insert into admindatabase.admininfo values(?,?,?,?)" );
+                   PreparedStatement put = myConnection.prepareStatement("insert into administrator values(?,?,?,?,?,?,?)" );
+                   
                    put.setString(1, admin);
-                   put.setString(2, pangalan);
-                   put.setString(3, pass);
-                   put.setString(4, cp);
+                   put.setString(2, lastname);
+                   put.setString(3, first);
+                   put.setString(4, middle );
+                   put.setString(5,emailadd);
+                   put.setString(6, pass1);
+                   put.setString(7,contactnumber);
                     int row = put.executeUpdate();
                    JOptionPane.showMessageDialog(null, "LOG IN SUCCESSFULLY!!");
                    myConnection.close();
@@ -192,37 +534,11 @@ public class adminRegister extends javax.swing.JFrame {
                     e.printStackTrace();          
                }
              }
-             
-         }
-    }//GEN-LAST:event_confirmActionPerformed
 
-    private void cellphoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cellphoneKeyPressed
-        // limit the integer in 11 digits only
-        String cpnumber = cellphone.getText();
-        int length = cpnumber.length();
-     if(length<11)
-            if(length<11){
-                cellphone.setEditable(true);
-            }else{
-                cellphone.setEditable(false);
-            
-            }else{
-              if(evt.getExtendedKeyCode()==KeyEvent.VK_BACK_SPACE|| evt.getExtendedKeyCode()==KeyEvent.VK_DELETE ) {
-                    cellphone.setEditable(true);                  
-                    }else{
-                    cellphone.setEditable(false);
-                    }
-              } 
-    }//GEN-LAST:event_cellphoneKeyPressed
-
-    private void cellphoneKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cellphoneKeyTyped
-        // input should be numbers only
-        char c = evt.getKeyChar();
-        String cpText = cellphone.getText();
-        if(!Character.isDigit(c)){
-            evt.consume();
-        }
-    }//GEN-LAST:event_cellphoneKeyTyped
+        
+        
+        
+    }//GEN-LAST:event_registerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -260,20 +576,28 @@ public class adminRegister extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel background;
-    private javax.swing.JButton cancel;
-    private javax.swing.JTextField cellphone;
-    private javax.swing.JButton confirm;
-    private javax.swing.JPasswordField confirmapassword;
+    private javax.swing.JLabel apel;
+    private javax.swing.JButton back;
+    private javax.swing.JTextField confirm;
+    private javax.swing.JLabel cont;
+    private javax.swing.JTextField contact;
+    private javax.swing.JLabel cpa;
+    private javax.swing.JLabel ema;
+    private javax.swing.JTextField email;
+    private javax.swing.JTextField firstname;
+    private javax.swing.JLabel git;
+    private javax.swing.JLabel id;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField name;
-    private javax.swing.JPasswordField password;
-    private javax.swing.JTextField username;
+    private javax.swing.JTextField last;
+    private javax.swing.JTextField middlename;
+    private javax.swing.JLabel pang;
+    private javax.swing.JLabel pas;
+    private javax.swing.JTextField password;
+    private javax.swing.JButton register;
+    private javax.swing.JTextField suffix;
     // End of variables declaration//GEN-END:variables
 }

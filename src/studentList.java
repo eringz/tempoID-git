@@ -36,16 +36,22 @@ public class studentList extends javax.swing.JFrame {
         initComponents();
         showUser();
     }
+    public studentList(String person) {
+        initComponents();
+        showUser();
+        idnumb.setText(person);
+        course.hide();
+    }
     public ArrayList<User> userlist(){
         ArrayList<User> usersList = new ArrayList<>();
         try{
-        myConnection = DriverManager.getConnection("jdbc:derby://localhost:1527/studentdata", "student", "admin");
+        myConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/temporaryid", "root", "");
         myStatement = myConnection.createStatement();
-        myResult = myStatement.executeQuery("Select * From student.data");
+        myResult = myStatement.executeQuery("Select * From student");
         //table.setModel(DbUtils.resultSetToTableModel(myResult));
         User user;
         while(myResult.next()){
-            user= new User(myResult.getString("idnumber"), myResult.getString("studentnumber"), myResult.getString("lastname"),myResult.getString("firstname"), myResult.getString("middlename"), myResult.getString("course"), myResult.getString("cellphone"), myResult.getString("email"));
+            user= new User(myResult.getString("idnumber"), myResult.getString("studentnumber"), myResult.getString("lastname"),myResult.getString("firstname"), myResult.getString("middlename"), myResult.getString("course"), myResult.getString("contact"), myResult.getString("email"));
             usersList.add(user);
         }
         }catch (SQLException e){
@@ -79,118 +85,152 @@ public class studentList extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        searchtype = new javax.swing.JTextField();
-        search = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableta = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         ok = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        create = new javax.swing.JButton();
+        course = new javax.swing.JComboBox<>();
+        idnumb = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel1.add(searchtype, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 30, 230, 31));
 
-        search.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        search.setText("SEARCH");
-        search.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchActionPerformed(evt);
-            }
-        });
-        jPanel1.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 30, 100, 30));
-
+        tableta.setAutoCreateRowSorter(true);
+        tableta.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         tableta.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         tableta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID #", "STUDENT #", "NAME", "COURSE", "CELLPHONE #", "EMAIL ADDRESS"
+                "ID NO", "STUDENT NO", "NAME", "COURSE", "CONTACT NO", "EMAIL ADDRESS"
             }
         ));
         tableta.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tableta.setGridColor(new java.awt.Color(38, 110, 11));
         jScrollPane1.setViewportView(tableta);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 920, 90));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 890, 210));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Lucida Sans", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("STUDENT INFORMATION");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 890, 40));
+        jLabel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 780, 70));
 
-        ok.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        ok.setBackground(new java.awt.Color(61, 83, 244));
+        ok.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        ok.setForeground(new java.awt.Color(240, 245, 252));
         ok.setText("OK");
         ok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 okActionPerformed(evt);
             }
         });
-        jPanel1.add(ok, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 440, 130, 30));
+        jPanel1.add(ok, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 460, 210, 40));
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton2.setBackground(new java.awt.Color(255, 102, 102));
+        jButton2.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(252, 251, 240));
         jButton2.setText("CANCEL");
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, 130, 30));
-
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton3.setText("NEW");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 440, 130, 30));
-        jPanel1.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 940, 90));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 530, 210, 40));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 937, 490));
+        create.setBackground(new java.awt.Color(37, 151, 17));
+        create.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        create.setText("NEW");
+        create.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createActionPerformed(evt);
+            }
+        });
+        jPanel1.add(create, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 170, 140, 30));
+
+        course.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        course.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ALL SECTION", "BSCPE2A", "BSCPE2B", "BSCPE2C", "BSCPE2D" }));
+        course.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                courseActionPerformed(evt);
+            }
+        });
+        jPanel1.add(course, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 150, 240, 30));
+
+        idnumb.setText("jLabel2");
+        jPanel1.add(idnumb, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, 110, 30));
+
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imahe/green1kAsset 1.png"))); // NOI18N
+        jPanel1.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 940, 600));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 940, 600));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void createActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createActionPerformed
         // TODO add your handling code here:
-        this.dispose();
-        new studentReg().setVisible(true);
-    }//GEN-LAST:event_jButton3ActionPerformed
+        String person = idnumb.getText();
+        studentReg input = new studentReg();
+                input.idnu.setText(person); 
+                this.dispose();
+                new studentReg(person).show();
+    }//GEN-LAST:event_createActionPerformed
 
     private void okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okActionPerformed
         // TODO add your handling code here:
+        String person = idnumb.getText();
         JOptionPane.showConfirmDialog(null, "Are you sure you want to continue?", "CONFIRMATION", JOptionPane.YES_NO_OPTION);
         idOutput input = new idOutput();
         DefaultTableModel mod = (DefaultTableModel) tableta.getModel();
         int selecta = tableta.getSelectedRow();
+        input.idnumbe.setText(person);
          input.studentn.setText( mod.getValueAt(selecta, 1).toString());
         //String info = input.idnumber.getText();
         String info = mod.getValueAt(selecta, 1).toString();
         // idOutput.cdm.setText(get);
        // System.out.println(info);     
         this.hide();
-        new idOutput(info).show(); 
+        new idOutput(info, person).show(); 
     }//GEN-LAST:event_okActionPerformed
 
-    private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed
-        
-        String sql = "SELECT ALL FROM student.data"+searchtype.getText();     
-        try {
-            // TODO add your handling code here:
-            myConnection = DriverManager.getConnection("jdbc:derby://localhost:1527/studentdata", "student", "admin");
-            myStatement = myConnection.createStatement();
-            myResult = myStatement.executeQuery(sql);
-            if(myResult.next()){
-                
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(studentList.class.getName()).log(Level.SEVERE, null, ex);
+    private void courseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseActionPerformed
+    String kurso = course.getSelectedItem().toString();
+    System.out.println(kurso);
+     ArrayList<User> usersList = new ArrayList<>();
+        try{
+        myConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/temporaryid", "root", "");
+        myStatement = myConnection.createStatement();
+        myResult = myStatement.executeQuery("Select * From student WHERE course= "+kurso);
+        //table.setModel(DbUtils.resultSetToTableModel(myResult));
+        User user;
+        while(myResult.next()){
+            user= new User(myResult.getString("idnumber"), myResult.getString("studentnumber"), myResult.getString("lastname"),myResult.getString("firstname"), myResult.getString("middlename"), myResult.getString("course"), myResult.getString("contact"), myResult.getString("email"));
+            usersList.add(user);
         }
-        
-        
-      
-    }//GEN-LAST:event_searchActionPerformed
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    
+              
+    }//GEN-LAST:event_courseActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String person = idnumb.getText();
+        frontPage input = new frontPage();
+                input.idn.setText(person); 
+                this.dispose();
+                new frontPage(person).show();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -229,14 +269,14 @@ public class studentList extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background;
+    private javax.swing.JComboBox<String> course;
+    private javax.swing.JButton create;
+    public static javax.swing.JLabel idnumb;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JButton ok;
-    private javax.swing.JButton search;
-    private javax.swing.JTextField searchtype;
     public static javax.swing.JTable tableta;
     // End of variables declaration//GEN-END:variables
 }

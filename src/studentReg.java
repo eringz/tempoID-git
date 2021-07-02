@@ -64,7 +64,36 @@ public class studentReg extends javax.swing.JFrame {
         orasPakita();
         connect();
       
-         String ako = "SELECT MAX(idnumber) FROM student.data";
+         String ako = "SELECT MAX(idnumber) FROM student";
+         try{
+              Statement add = myConnection.createStatement();
+                 ResultSet rs = add.executeQuery(ako);
+                 if (rs.next()){
+                       String id = rs.getString(1);
+                     System.out.println(id);
+                     
+                     StringBuffer buff = new StringBuffer(id);
+                     buff.delete(0, 4);
+                     String a = buff.toString();
+                     int b = Integer.parseInt(a);
+                     int c = b + 1;
+                    String d = String.valueOf(c);
+                    String e = "CDM-"+c;
+                    idnumber.setText(e);                  
+            }
+         } catch (SQLException ex) {
+            Logger.getLogger(studentReg.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    public studentReg(String person) {
+        initComponents();
+        idnu.setText(person);
+        petsaPakita();
+        orasPakita();
+        connect();
+        idnu.hide();
+         String ako = "SELECT MAX(idnumber) FROM student";
          try{
               Statement add = myConnection.createStatement();
                  ResultSet rs = add.executeQuery(ako);
@@ -89,9 +118,9 @@ public class studentReg extends javax.swing.JFrame {
   
     public void connect(){
         try{
-            myConnection = DriverManager.getConnection("jdbc:derby://localhost:1527/studentdata", "student", "admin");
+            myConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/temporaryid", "root", "");
             myStatement = myConnection.createStatement();
-            myResult = myStatement.executeQuery("Select * From student.data");
+            myResult = myStatement.executeQuery("Select * From student");
             
         }catch(SQLException e){
             e.printStackTrace();
@@ -132,23 +161,30 @@ public class studentReg extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        photo = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         photoption = new javax.swing.JPanel();
         upload = new javax.swing.JButton();
-        camera = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         last = new javax.swing.JLabel();
         middle = new javax.swing.JLabel();
-        elabel = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        str5 = new javax.swing.JLabel();
+        str4 = new javax.swing.JLabel();
+        str3 = new javax.swing.JLabel();
+        str2 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        ea = new javax.swing.JLabel();
+        ct = new javax.swing.JLabel();
         guardl = new javax.swing.JLabel();
         first = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         guardf = new javax.swing.JLabel();
         guardm = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        gc = new javax.swing.JLabel();
+        str = new javax.swing.JLabel();
+        st = new javax.swing.JLabel();
         studentnumber = new javax.swing.JTextField();
         middlename = new javax.swing.JTextField();
         cellphone = new javax.swing.JTextField();
@@ -156,37 +192,57 @@ public class studentReg extends javax.swing.JFrame {
         guardianFirst = new javax.swing.JTextField();
         guardianM = new javax.swing.JTextField();
         email = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        address = new javax.swing.JTextArea();
         ok = new javax.swing.JButton();
         cancel = new javax.swing.JButton();
-        photo = new javax.swing.JLabel();
         lastname = new javax.swing.JTextField();
         firstname = new javax.swing.JTextField();
+        add1 = new javax.swing.JTextField();
+        add2 = new javax.swing.JTextField();
+        add3 = new javax.swing.JTextField();
+        add5 = new javax.swing.JTextField();
+        add4 = new javax.swing.JTextField();
         course = new javax.swing.JComboBox<>();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         time = new javax.swing.JLabel();
         idnumber = new javax.swing.JLabel();
         date = new javax.swing.JLabel();
         guardianContact = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jlabel14 = new javax.swing.JLabel();
+        idnu = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(226, 242, 240));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        photo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        photo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        photo.setText("NO PHOTO");
+        photo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        photo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                photoMouseClicked(evt);
+            }
+        });
+        jPanel2.add(photo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 190, 180));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imahe/green1kAsset 1.png"))); // NOI18N
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 200));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 270, 210, 200));
 
         photoption.setBackground(new java.awt.Color(247, 252, 252));
         photoption.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(191, 225, 223), new java.awt.Color(231, 243, 242), new java.awt.Color(74, 195, 192), new java.awt.Color(146, 206, 200)));
         photoption.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         upload.setBackground(new java.awt.Color(236, 242, 243));
-        upload.setText("UPLOAD PHOTO");
+        upload.setText("ATTACH PHOTO");
         upload.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(180, 255, 255), new java.awt.Color(207, 255, 255), new java.awt.Color(162, 255, 255), new java.awt.Color(191, 255, 255)));
         upload.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -201,101 +257,148 @@ public class studentReg extends javax.swing.JFrame {
                 uploadActionPerformed(evt);
             }
         });
-        photoption.add(upload, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 5, 180, 30));
+        photoption.add(upload, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 180, 30));
 
-        camera.setBackground(new java.awt.Color(238, 244, 244));
-        camera.setText("CAMERA");
-        photoption.add(camera, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 160, -1));
+        jPanel1.add(photoption, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 480, 210, 50));
 
-        jPanel1.add(photoption, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 250, 190, 70));
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Lucida Sans", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("STUDENT FILL-UP SECTION");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 475, 36));
+        jLabel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 680, 60));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setText("STUDENT NUMBER");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 150, 26));
-
-        last.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        last.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
         last.setForeground(new java.awt.Color(204, 204, 204));
         last.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         last.setText("LAST NAME");
-        jPanel1.add(last, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, 90, 26));
+        jPanel1.add(last, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 130, 26));
 
         middle.setBackground(new java.awt.Color(204, 204, 204));
-        middle.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        middle.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
         middle.setForeground(new java.awt.Color(204, 204, 204));
-        middle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        middle.setText("MIDDLE NAME");
-        jPanel1.add(middle, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, 110, 26));
+        middle.setText(" MIDDLE NAME");
+        jPanel1.add(middle, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 210, 160, 26));
 
-        elabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        elabel.setForeground(new java.awt.Color(204, 204, 204));
-        elabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        elabel.setText("emailaddressexample@gmail.com");
-        jPanel1.add(elabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, 260, 26));
+        str5.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        str5.setForeground(new java.awt.Color(204, 204, 204));
+        str5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        str5.setText(" CITY / PROVINCE");
+        jPanel1.add(str5, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 480, 170, 26));
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel5.setText("COURSE YR & SEC");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 160, 26));
+        str4.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        str4.setForeground(new java.awt.Color(204, 204, 204));
+        str4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        str4.setText(" MUNICIPALITY");
+        jPanel1.add(str4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 480, 170, 26));
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        str3.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        str3.setForeground(new java.awt.Color(204, 204, 204));
+        str3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        str3.setText("ADDRESS LINE 2");
+        jPanel1.add(str3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 440, 170, 26));
+
+        str2.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        str2.setForeground(new java.awt.Color(204, 204, 204));
+        str2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        str2.setText(" BARANGAY");
+        jPanel1.add(str2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 400, 120, 26));
+
+        jLabel6.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
         jLabel6.setText("ADDRESS");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 95, 26));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, 95, 26));
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel8.setText("EMAIL ADDRESS");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 160, 26));
+        ea.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        ea.setForeground(new java.awt.Color(204, 204, 204));
+        ea.setText(" EMAIL ADDRESS");
+        jPanel1.add(ea, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 310, 160, 26));
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel7.setText("CELLPHONE NUMBER");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 160, 26));
+        ct.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        ct.setForeground(new java.awt.Color(204, 204, 204));
+        ct.setText(" CONTACT NO");
+        ct.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                ctKeyTyped(evt);
+            }
+        });
+        jPanel1.add(ct, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 140, 26));
 
-        guardl.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        guardl.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
         guardl.setForeground(new java.awt.Color(204, 204, 204));
         guardl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         guardl.setText("LAST NAME");
-        jPanel1.add(guardl, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 310, 130, 26));
+        jPanel1.add(guardl, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 550, 130, 26));
 
         first.setBackground(new java.awt.Color(204, 204, 204));
-        first.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        first.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
         first.setForeground(new java.awt.Color(204, 204, 204));
         first.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         first.setText("FIRST NAME");
-        jPanel1.add(first, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, 140, 26));
+        jPanel1.add(first, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 210, 140, 26));
 
-        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel14.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
         jLabel14.setText("GURDIAN NAME");
-        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 130, 26));
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 520, 180, 26));
 
-        guardf.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        guardf.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
         guardf.setForeground(new java.awt.Color(204, 204, 204));
         guardf.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         guardf.setText("FIRST NAME");
-        jPanel1.add(guardf, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 310, 120, 26));
+        jPanel1.add(guardf, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 550, 120, 26));
 
-        guardm.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        guardm.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
         guardm.setForeground(new java.awt.Color(204, 204, 204));
         guardm.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         guardm.setText("MIDDLE NAME");
-        jPanel1.add(guardm, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 310, 130, 26));
+        jPanel1.add(guardm, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 550, 160, 26));
 
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imahe/1x/1x/cdmlogo80pxAsset 6.png"))); // NOI18N
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, 160, 80));
+
+        gc.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        gc.setForeground(new java.awt.Color(204, 204, 204));
+        gc.setText(" ex 09123456789");
+        jPanel1.add(gc, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 600, 170, 30));
+
+        str.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        str.setForeground(new java.awt.Color(204, 204, 204));
+        str.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        str.setText(" STREET NO");
+        jPanel1.add(str, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 140, 26));
+
+        st.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        st.setForeground(new java.awt.Color(204, 204, 204));
+        st.setText(" STUDENT NUMBER");
+        jPanel1.add(st, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 180, 30));
+
+        studentnumber.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        studentnumber.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        studentnumber.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                studentnumberFocusLost(evt);
+            }
+        });
         studentnumber.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 studentnumberKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                studentnumberKeyTyped(evt);
+            }
         });
-        jPanel1.add(studentnumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, 230, 30));
+        jPanel1.add(studentnumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 210, 30));
 
+        middlename.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        middlename.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         middlename.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 middlenameKeyTyped(evt);
             }
         });
-        jPanel1.add(middlename, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, 120, 30));
+        jPanel1.add(middlename, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 210, 200, 30));
 
+        cellphone.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        cellphone.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         cellphone.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 cellphoneKeyPressed(evt);
@@ -304,69 +407,66 @@ public class studentReg extends javax.swing.JFrame {
                 cellphoneKeyTyped(evt);
             }
         });
-        jPanel1.add(cellphone, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 210, 170, 30));
+        jPanel1.add(cellphone, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 190, 30));
 
+        guardianLast.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
         guardianLast.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 guardianLastKeyTyped(evt);
             }
         });
-        jPanel1.add(guardianLast, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 310, 120, 30));
+        jPanel1.add(guardianLast, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 550, 220, 30));
 
+        guardianFirst.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        guardianFirst.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         guardianFirst.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 guardianFirstKeyTyped(evt);
             }
         });
-        jPanel1.add(guardianFirst, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 310, 170, 30));
+        jPanel1.add(guardianFirst, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 550, 240, 30));
 
+        guardianM.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        guardianM.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         guardianM.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 guardianMKeyTyped(evt);
             }
         });
-        jPanel1.add(guardianM, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 310, 110, 30));
+        jPanel1.add(guardianM, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 550, 200, 30));
 
+        email.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        email.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         email.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 emailKeyTyped(evt);
             }
         });
-        jPanel1.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 270, 290, 30));
+        jPanel1.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 310, 260, 30));
 
-        address.setColumns(20);
-        address.setRows(5);
-        jScrollPane1.setViewportView(address);
-
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 390, 660, 100));
-
-        ok.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        ok.setBackground(new java.awt.Color(37, 151, 17));
+        ok.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
         ok.setText("SUBMIT");
         ok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 okActionPerformed(evt);
             }
         });
-        jPanel1.add(ok, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 500, 130, 30));
+        jPanel1.add(ok, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 660, 270, 40));
 
-        cancel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cancel.setBackground(new java.awt.Color(255, 102, 102));
+        cancel.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        cancel.setForeground(new java.awt.Color(252, 251, 240));
         cancel.setText("CANCEL");
         cancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelActionPerformed(evt);
             }
         });
-        jPanel1.add(cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 530, 130, 30));
+        jPanel1.add(cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 710, 270, 40));
 
-        photo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        photo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imahe/editAsset 1.png"))); // NOI18N
-        photo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                photoMouseClicked(evt);
-            }
-        });
-        jPanel1.add(photo, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 90, 160, 120));
-
+        lastname.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        lastname.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         lastname.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 lastnameFocusGained(evt);
@@ -380,14 +480,61 @@ public class studentReg extends javax.swing.JFrame {
                 lastnameKeyTyped(evt);
             }
         });
-        jPanel1.add(lastname, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, 110, 30));
+        jPanel1.add(lastname, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 210, 30));
 
+        firstname.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        firstname.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         firstname.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 firstnameKeyTyped(evt);
             }
         });
-        jPanel1.add(firstname, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, 170, 30));
+        jPanel1.add(firstname, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 210, 250, 30));
+
+        add1.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        add1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        add1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                add1KeyTyped(evt);
+            }
+        });
+        jPanel1.add(add1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 220, 30));
+
+        add2.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        add2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        add2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                add2KeyTyped(evt);
+            }
+        });
+        jPanel1.add(add2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 400, 250, 30));
+
+        add3.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        add3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        add3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                add3KeyTyped(evt);
+            }
+        });
+        jPanel1.add(add3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 440, 480, 30));
+
+        add5.setFont(new java.awt.Font("Lucida Sans", 0, 18)); // NOI18N
+        add5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        add5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                add5KeyTyped(evt);
+            }
+        });
+        jPanel1.add(add5, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 480, 230, 30));
+
+        add4.setFont(new java.awt.Font("Lucida Sans", 0, 18)); // NOI18N
+        add4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        add4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                add4KeyTyped(evt);
+            }
+        });
+        jPanel1.add(add4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 480, 240, 30));
 
         course.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         course.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECT COURSE", "BSCPE2A", "BSCPE2B", "BSCPE2C", "BSCPE2D" }));
@@ -396,31 +543,25 @@ public class studentReg extends javax.swing.JFrame {
                 courseActionPerformed(evt);
             }
         });
-        jPanel1.add(course, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 170, 150, 30));
-
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel9.setText("Please input 11 digit number");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 350, 190, 30));
-
-        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel10.setText("example 21-00123");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 80, 120, 30));
+        jPanel1.add(course, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, 180, 30));
 
         time.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         time.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         time.setText("TIME");
-        jPanel1.add(time, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 540, 120, -1));
+        jPanel1.add(time, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 750, 90, -1));
 
         idnumber.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         idnumber.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         idnumber.setText("CDM-2100001");
-        jPanel1.add(idnumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 30, 120, -1));
+        jPanel1.add(idnumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 80, 120, -1));
 
         date.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         date.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         date.setText("DATE ISSUANCE");
-        jPanel1.add(date, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 510, 120, -1));
+        jPanel1.add(date, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 720, 120, -1));
 
+        guardianContact.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        guardianContact.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         guardianContact.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 guardianContactKeyPressed(evt);
@@ -429,24 +570,24 @@ public class studentReg extends javax.swing.JFrame {
                 guardianContactKeyTyped(evt);
             }
         });
-        jPanel1.add(guardianContact, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 350, 170, 30));
+        jPanel1.add(guardianContact, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 600, 270, 30));
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel11.setText("Please input 11 digit number");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 210, 190, 30));
+        jLabel12.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        jLabel12.setText("GURDIAN CONTACT ");
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 600, 190, 26));
 
-        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel12.setText("GURDIAN CONTACT #");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 160, 26));
-
-        jlabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jlabel14.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
         jlabel14.setText("STUDENT NAME");
-        jPanel1.add(jlabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 140, 26));
+        jPanel1.add(jlabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 180, 26));
+
+        idnu.setText("jLabel4");
+        jPanel1.add(idnu, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 120, 30));
 
         background.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jPanel1.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 810, 570));
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imahe/green1kAsset 1.png"))); // NOI18N
+        jPanel1.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 780));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 780));
 
         pack();
         setLocationRelativeTo(null);
@@ -475,7 +616,12 @@ public class studentReg extends javax.swing.JFrame {
             String guardianMid = guardianM.getText().toUpperCase();
             String contact = guardianContact.getText();
             String eadd = email.getText();
-            String add = address.getText().toUpperCase();
+            String address1 = add1.getText().toUpperCase();
+            String address2 = add2.getText().toUpperCase();
+            String address3 = add3.getText().toUpperCase();
+            String address4 = add4.getText().toUpperCase();
+            String address5 = add5.getText().toUpperCase();
+            String address = address1+ " " + address2+ " " +address3 + " "+address4+" "+address5; 
             String pic = photo.getName();
             System.out.println(pic);
             int stdnolength = studentno.length();
@@ -488,7 +634,8 @@ public class studentReg extends javax.swing.JFrame {
             int gMlength = guardianMid.length();
             int contactlength = contact.length();
             int eadlength = eadd.length();
-            int addlength = add.length();
+            int addlength = address.length();
+            
             if(stdnolength == 0 || lnlength == 0 || fnlength == 0 || mlength == 0 || clength==0 ||gLNlength ==0
                    ||gFNlength == 0 || gMlength == 0 || contactlength == 0 || eadlength == 0 ||addlength==0
                     || kurso.contains("SELECT COURSE")){
@@ -496,7 +643,7 @@ public class studentReg extends javax.swing.JFrame {
             }
                
             try {
-                PreparedStatement put = myConnection.prepareStatement("insert into student.data values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                PreparedStatement put = myConnection.prepareStatement("insert into student values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
                put.setString(1, idno);
                put.setDate(2,dql);  
                put.setString(3, studentno);
@@ -510,7 +657,7 @@ public class studentReg extends javax.swing.JFrame {
                put.setString(11, guardianMid);
                put.setString(12, contact);
                put.setString(13, eadd);
-               put.setString(14, add);   
+               put.setString(14, address);   
                put.setTime(15,tql);
                 try {
                     FileInputStream fis = new FileInputStream(pic);
@@ -526,7 +673,8 @@ public class studentReg extends javax.swing.JFrame {
                myConnection.close();
                JOptionPane.showMessageDialog(this, "Registered");
                this.dispose();
-               new studentList().show();              
+               String info = studentnumber.getText();
+               new idOutput(info, idno).show();              
                 }catch (SQLException ex) {
                   Logger.getLogger(practice1.class.getName()).log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(null,"Hnapin ang error!!","ERROR MESSAGE",JOptionPane.ERROR_MESSAGE);                        
@@ -563,6 +711,7 @@ public class studentReg extends javax.swing.JFrame {
             String path = selectedFile.getAbsolutePath();
             photo.setIcon(resizeImage(path));        
             photoption.hide();
+            photo.setText("");
             photo.setName(path);
         }else if(result== JFileChooser.CANCEL_OPTION){
             JOptionPane.showMessageDialog(null,"DI KA PUMILI","ERROR MESSAGE",JOptionPane.ERROR_MESSAGE);
@@ -578,9 +727,11 @@ public class studentReg extends javax.swing.JFrame {
     }//GEN-LAST:event_uploadMouseExited
 
     private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
-        // TODO add your handling code here:     
+        // TODO add your handling code here:   
+        String tao = idnu.getText();
+        
         this.dispose();
-        new studentList().show();
+        new frontPage(tao).show();
     }//GEN-LAST:event_cancelActionPerformed
 
     private void cellphoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cellphoneKeyPressed
@@ -604,7 +755,10 @@ public class studentReg extends javax.swing.JFrame {
 
     private void cellphoneKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cellphoneKeyTyped
         // TODO add your handling code here:
-         char c = evt.getKeyChar();
+         String cp = cellphone.getText();
+        if(cp.contains(cp)){   
+            ct.hide();    
+        }char c = evt.getKeyChar();
         String cpText = cellphone.getText();
         if(!Character.isDigit(c)){
             evt.consume();
@@ -696,6 +850,10 @@ public class studentReg extends javax.swing.JFrame {
 
     private void guardianContactKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_guardianContactKeyTyped
         // TODO add your handling code here:
+         String gct = guardianContact.getText();
+        if(gct.contains(gct)){   
+            gc.hide();    
+        } 
         char c = evt.getKeyChar();
         if(!Character.isDigit(c)){
             evt.consume();
@@ -706,7 +864,7 @@ public class studentReg extends javax.swing.JFrame {
         // TODO add your handling code here:
         String el = email.getText();
         if(el.contains(el)){
-            elabel.hide();
+            ea.hide();
         }
     }//GEN-LAST:event_emailKeyTyped
 
@@ -732,6 +890,62 @@ public class studentReg extends javax.swing.JFrame {
     private void courseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courseActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_courseActionPerformed
+
+    private void studentnumberFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_studentnumberFocusLost
+     /*    String sn = studentnumber.getText();
+        if(sn.contains("")){
+            st.show();
+                if(sn.contains(sn)){
+                    last.hide();
+                }
+        }*/
+    }//GEN-LAST:event_studentnumberFocusLost
+
+    private void studentnumberKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_studentnumberKeyTyped
+         String sn = studentnumber.getText();
+        if(sn.contains(sn)){   
+            st.hide();    
+        } 
+    }//GEN-LAST:event_studentnumberKeyTyped
+
+    private void ctKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ctKeyTyped
+      
+    }//GEN-LAST:event_ctKeyTyped
+
+    private void add1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_add1KeyTyped
+        String ad1 = add1.getText();
+        if(ad1.contains(ad1)){   
+            str.hide();    
+        } 
+    }//GEN-LAST:event_add1KeyTyped
+
+    private void add3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_add3KeyTyped
+         String ad3 = add3.getText();
+        if(ad3.contains(ad3)){   
+            str3.hide();    
+        } 
+    }//GEN-LAST:event_add3KeyTyped
+
+    private void add2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_add2KeyTyped
+        String ad2 = add2.getText();
+        if(ad2.contains(ad2)){   
+            str2.hide();
+        }
+    }//GEN-LAST:event_add2KeyTyped
+
+    private void add4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_add4KeyTyped
+         String ad4 = add4.getText();
+        if(ad4.contains(ad4)){   
+            str4.hide();
+        }
+    }//GEN-LAST:event_add4KeyTyped
+
+    private void add5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_add5KeyTyped
+        String ad5 = add5.getText();
+        if(ad5.contains(ad5)){   
+            str5.hide();
+        }
+    }//GEN-LAST:event_add5KeyTyped
 
     /**
      * @param args the command line arguments
@@ -769,17 +983,22 @@ public class studentReg extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea address;
+    private javax.swing.JTextField add1;
+    private javax.swing.JTextField add2;
+    private javax.swing.JTextField add3;
+    private javax.swing.JTextField add4;
+    private javax.swing.JTextField add5;
     private javax.swing.JLabel background;
-    private javax.swing.JButton camera;
     private javax.swing.JButton cancel;
     private javax.swing.JTextField cellphone;
     private javax.swing.JComboBox<String> course;
+    private javax.swing.JLabel ct;
     private javax.swing.JLabel date;
-    private javax.swing.JLabel elabel;
+    private javax.swing.JLabel ea;
     private javax.swing.JTextField email;
     private javax.swing.JLabel first;
     private javax.swing.JTextField firstname;
+    private javax.swing.JLabel gc;
     private javax.swing.JLabel guardf;
     private javax.swing.JTextField guardianContact;
     private javax.swing.JTextField guardianFirst;
@@ -787,20 +1006,16 @@ public class studentReg extends javax.swing.JFrame {
     private javax.swing.JTextField guardianM;
     private javax.swing.JLabel guardl;
     private javax.swing.JLabel guardm;
+    public static javax.swing.JLabel idnu;
     private javax.swing.JLabel idnumber;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel jlabel14;
     private javax.swing.JLabel last;
     private javax.swing.JTextField lastname;
@@ -809,6 +1024,12 @@ public class studentReg extends javax.swing.JFrame {
     private javax.swing.JButton ok;
     private javax.swing.JLabel photo;
     private javax.swing.JPanel photoption;
+    private javax.swing.JLabel st;
+    private javax.swing.JLabel str;
+    private javax.swing.JLabel str2;
+    private javax.swing.JLabel str3;
+    private javax.swing.JLabel str4;
+    private javax.swing.JLabel str5;
     private javax.swing.JTextField studentnumber;
     private javax.swing.JLabel time;
     private javax.swing.JButton upload;
