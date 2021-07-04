@@ -358,6 +358,7 @@ public class frontPage extends javax.swing.JFrame {
         input.idnum.setText(son);   
         new adminUpdate(son).show();
         this.dispose();
+        
     }//GEN-LAST:event_updateActionPerformed
 
     private void searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchActionPerformed

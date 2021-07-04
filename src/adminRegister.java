@@ -37,6 +37,7 @@ public class adminRegister extends javax.swing.JFrame {
     public adminRegister() {
         initComponents();
         connect();
+        jPanel1.setFocusable(true);
         //back.setBackground(new Color(0,0,0,0));
         String ako = "SELECT MAX(id) FROM administrator";
          try{
@@ -288,7 +289,7 @@ public class adminRegister extends javax.swing.JFrame {
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 220, 70, 40));
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imahe/1x/logoAsset 8.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imahe/1x/1x/cdmlogo80pxAsset 6.png"))); // NOI18N
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, 190, 80));
 
         back.setBackground(new java.awt.Color(255, 102, 102));
@@ -321,8 +322,8 @@ public class adminRegister extends javax.swing.JFrame {
         id.setText("ADMIN-00001");
         jPanel1.add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 70, 140, 40));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imahe/1x/greenback2Asset 6.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 600));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imahe/green1kAsset 1.png"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 600));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 600));
 
@@ -525,7 +526,7 @@ public class adminRegister extends javax.swing.JFrame {
                    put.setString(6, pass1);
                    put.setString(7,contactnumber);
                     int row = put.executeUpdate();
-                   JOptionPane.showMessageDialog(null, "LOG IN SUCCESSFULLY!!");
+                   JOptionPane.showMessageDialog(null, "REGISTER, SUCCESSFULLY!!");
                    myConnection.close();
                    this.dispose();
                   // new adminLogIN().setVisible(true);

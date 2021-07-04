@@ -58,10 +58,11 @@ public class idOutput extends javax.swing.JFrame {
         //String rad = studentn.getText();
        
     }
+  
 
    public  idOutput(String colegio, String person ){
        initComponents();
-       
+    
        backPanel.hide();
        studentn.setText(colegio);
        idnumbe.setText(person);
@@ -89,7 +90,7 @@ public class idOutput extends javax.swing.JFrame {
             String gdf = rs.getString(10);
             String gdm = rs.getString(11);
             String guardianini = gdm.substring(0,1);
-            String gwardiya = gdf+" "+guardianini+" "+gdl;
+            String gwardiya = gdf+" "+guardianini+". "+gdl;
             String gcontact = rs.getString(12);
             String cellphone = rs.getString(7);
             String eadd = rs.getString(13);
@@ -173,6 +174,16 @@ public class idOutput extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        frontPanel = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        course = new javax.swing.JLabel();
+        photo = new javax.swing.JLabel();
+        studentn = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        name = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         backPanel = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         idnumber = new javax.swing.JLabel();
@@ -184,16 +195,6 @@ public class idOutput extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        frontPanel = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        course = new javax.swing.JLabel();
-        photo = new javax.swing.JLabel();
-        studentn = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        name = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         side = new javax.swing.JComboBox<>();
         edit = new javax.swing.JButton();
@@ -205,6 +206,55 @@ public class idOutput extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        frontPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel4.setBackground(new java.awt.Color(248, 255, 249));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setFont(new java.awt.Font("Palatino Linotype", 0, 36)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(2, 28, 9));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Colegio De Montalban");
+        jPanel4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 370, 70));
+
+        jLabel3.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(2, 28, 9));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Kasiglahan Village, San Jose Rodriguez Rizal");
+        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 350, 20));
+
+        course.setFont(new java.awt.Font("Nirmala UI", 1, 24)); // NOI18N
+        course.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        course.setText("COURSE");
+        jPanel4.add(course, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 470, 370, 50));
+
+        photo.setBackground(new java.awt.Color(255, 255, 255));
+        photo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        photo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        jPanel4.add(photo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 190, 180));
+
+        studentn.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        studentn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        studentn.setText("STUDENT NUMBER");
+        jPanel4.add(studentn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 200, 40));
+
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imahe/1x/1x/cdm logoAsset 1.png"))); // NOI18N
+        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 150, 160, 150));
+
+        name.setFont(new java.awt.Font("Nirmala UI", 1, 24)); // NOI18N
+        name.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        name.setText("NAME");
+        name.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(9, 50, 1), 3, true));
+        jPanel4.add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 370, 60));
+
+        frontPanel.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 390, 560));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imahe/alright.png"))); // NOI18N
+        frontPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 410, -1));
+
+        getContentPane().add(frontPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, -1, 580));
 
         backPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -261,54 +311,6 @@ public class idOutput extends javax.swing.JFrame {
 
         getContentPane().add(backPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, 410, 580));
 
-        frontPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel4.setBackground(new java.awt.Color(248, 255, 249));
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel2.setFont(new java.awt.Font("Palatino Linotype", 0, 36)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(2, 28, 9));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Colegio De Montalban");
-        jPanel4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 370, 70));
-
-        jLabel3.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(2, 28, 9));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Kasiglahan Village, San Jose Rodriguez Rizal");
-        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 350, 20));
-
-        course.setFont(new java.awt.Font("Nirmala UI", 1, 24)); // NOI18N
-        course.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        course.setText("COURSE");
-        jPanel4.add(course, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 470, 370, 50));
-
-        photo.setBackground(new java.awt.Color(255, 255, 255));
-        photo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        photo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
-        jPanel4.add(photo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 190, 180));
-
-        studentn.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
-        studentn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        studentn.setText("STUDENT NUMBER");
-        jPanel4.add(studentn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 200, 40));
-
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imahe/1x/1x/cdm logoAsset 1.png"))); // NOI18N
-        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 150, 160, 150));
-
-        name.setFont(new java.awt.Font("Nirmala UI", 1, 24)); // NOI18N
-        name.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        name.setText("NAME");
-        jPanel4.add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 370, 60));
-
-        frontPanel.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 390, 560));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imahe/alright.png"))); // NOI18N
-        frontPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 410, -1));
-
-        getContentPane().add(frontPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, -1, 580));
-
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         side.setBackground(new java.awt.Color(246, 252, 238));
@@ -320,10 +322,23 @@ public class idOutput extends javax.swing.JFrame {
                 sideActionPerformed(evt);
             }
         });
-        jPanel2.add(side, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 240, 40));
+        jPanel2.add(side, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 240, 40));
 
         edit.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
         edit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imahe/1x/1x/pen30Asset 2.png"))); // NOI18N
+        edit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editMouseExited(evt);
+            }
+        });
+        edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editActionPerformed(evt);
+            }
+        });
         jPanel2.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 70, 80, 40));
 
         home.setBackground(new java.awt.Color(96, 146, 22));
@@ -354,9 +369,9 @@ public class idOutput extends javax.swing.JFrame {
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imahe/green1kAsset 1.png"))); // NOI18N
         jLabel9.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(67, 73, 2), 3, true));
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, 800));
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 800));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 570, 800));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 560, 800));
 
         pack();
         setLocationRelativeTo(null);
@@ -409,6 +424,24 @@ public class idOutput extends javax.swing.JFrame {
             frontPanel.show();
         }
     }//GEN-LAST:event_sideActionPerformed
+
+    private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
+        studentUpdate input = new studentUpdate();
+        String hanap = studentn.getText();
+        String person = idnumbe.getText();
+        input.idnumba.setText(person);
+        this.dispose();
+        new studentUpdate(hanap, person).show();
+      
+    }//GEN-LAST:event_editActionPerformed
+
+    private void editMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseEntered
+        edit.setBackground(Color.GRAY);
+    }//GEN-LAST:event_editMouseEntered
+
+    private void editMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseExited
+        edit.setBackground(new Color(0,0,0,0));
+    }//GEN-LAST:event_editMouseExited
 
     /**
      * @param args the command line arguments

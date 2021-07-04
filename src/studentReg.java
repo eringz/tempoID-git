@@ -518,7 +518,7 @@ public class studentReg extends javax.swing.JFrame {
         });
         jPanel1.add(add3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 440, 480, 30));
 
-        add5.setFont(new java.awt.Font("Lucida Sans", 0, 18)); // NOI18N
+        add5.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
         add5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         add5.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -527,7 +527,7 @@ public class studentReg extends javax.swing.JFrame {
         });
         jPanel1.add(add5, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 480, 230, 30));
 
-        add4.setFont(new java.awt.Font("Lucida Sans", 0, 18)); // NOI18N
+        add4.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
         add4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         add4.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -537,7 +537,7 @@ public class studentReg extends javax.swing.JFrame {
         jPanel1.add(add4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 480, 240, 30));
 
         course.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        course.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECT COURSE", "BSCPE2A", "BSCPE2B", "BSCPE2C", "BSCPE2D" }));
+        course.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECT COURSE", "BSCPE-1B", "BSCPE-2A", "BSCPE-2B", "BSCPE-2C", "BSCPE-2D" }));
         course.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 courseActionPerformed(evt);
@@ -674,10 +674,11 @@ public class studentReg extends javax.swing.JFrame {
                JOptionPane.showMessageDialog(this, "Registered");
                this.dispose();
                String info = studentnumber.getText();
-               new idOutput(info, idno).show();              
+               String person = idnu.getText();
+               new idOutput(info, person).show();              
                 }catch (SQLException ex) {
-                  Logger.getLogger(practice1.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(null,"Hnapin ang error!!","ERROR MESSAGE",JOptionPane.ERROR_MESSAGE);                        
+                  Logger.getLogger(studentReg.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null,"There is existing record of "+studentno+"","ERROR MESSAGE",JOptionPane.ERROR_MESSAGE);                        
             }
         }else{
             JOptionPane.showMessageDialog(null,"Piniling Manatili");

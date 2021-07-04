@@ -41,6 +41,7 @@ public class studentList extends javax.swing.JFrame {
         showUser();
         idnumb.setText(person);
         course.hide();
+        idnumb.setVisible(false);
     }
     public ArrayList<User> userlist(){
         ArrayList<User> usersList = new ArrayList<>();
@@ -133,7 +134,7 @@ public class studentList extends javax.swing.JFrame {
                 okActionPerformed(evt);
             }
         });
-        jPanel1.add(ok, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 460, 210, 40));
+        jPanel1.add(ok, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 480, 210, 40));
 
         jButton2.setBackground(new java.awt.Color(255, 102, 102));
         jButton2.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N

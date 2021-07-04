@@ -25,12 +25,10 @@ public class adminUpdate extends javax.swing.JFrame {
     Connection myConnection = null;
         Statement myStatement= null;
         ResultSet myResult =null;
+        
     public adminUpdate() {
         initComponents();
-        edit1.setBackground(new Color(0,0,0,0));
-        edit2.setBackground(new Color(0,0,0,0));
-        edit3.setBackground(new Color(0,0,0,0));
-        edit4.setBackground(new Color(0,0,0,0));
+       
     }
     public void connect(){
         try{
@@ -47,11 +45,22 @@ public class adminUpdate extends javax.swing.JFrame {
         initComponents();
         connect();
         idnum.hide();
-        namepanel.hide();
+        last.setBackground(new Color(0,0,0,0));
+        first.setBackground(new Color(0,0,0,0));
+        mid.setBackground(new Color(0,0,0,0));
         edit1.setBackground(new Color(0,0,0,0));
         edit2.setBackground(new Color(0,0,0,0));
         edit3.setBackground(new Color(0,0,0,0));
-        edit4.setBackground(new Color(0,0,0,0));
+        last.setEditable(false);
+        first.setEditable(false);
+        mid.setEditable(false);
+        kontak.setEditable(false);
+        eadd.setEditable(false);
+        kontak.setBackground(new Color(0,0,0,0));
+        eadd.setBackground(new Color(0,0,0,0));
+        hide.hide();
+        
+       
         idnum.setText(son);
         String ako = idnum.getText();
         System.out.println("testing"+ako);
@@ -67,9 +76,13 @@ public class adminUpdate extends javax.swing.JFrame {
                 String password = rs.getString(6);
                 String contact = rs.getString(7);
                 String fullname = firstname+" " + middlename+ " " + lastname;
-                name.setText(fullname);
+                last.setText(lastname);
+                first.setText(firstname);
+                mid.setText(middlename);
+                kontak.setText(contact);
                 eadd.setText(email);
-                con.setText(contact);
+                pass.setText(password);
+              
                 
                 
                 
@@ -92,91 +105,72 @@ public class adminUpdate extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        namepanel = new javax.swing.JPanel();
-        apelido = new javax.swing.JTextField();
-        pangalan = new javax.swing.JTextField();
-        gitna = new javax.swing.JTextField();
-        cancel = new javax.swing.JButton();
-        save = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        update = new javax.swing.JButton();
         idnum = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        pass = new javax.swing.JLabel();
-        con = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        name = new javax.swing.JLabel();
-        eadd = new javax.swing.JLabel();
-        edit4 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        first = new javax.swing.JTextField();
+        last = new javax.swing.JTextField();
+        eadd = new javax.swing.JTextField();
+        mid = new javax.swing.JTextField();
+        kontak = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        show = new javax.swing.JButton();
+        pass = new javax.swing.JPasswordField();
+        jSeparator4 = new javax.swing.JSeparator();
+        jSeparator3 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
         edit3 = new javax.swing.JButton();
         edit2 = new javax.swing.JButton();
         edit1 = new javax.swing.JButton();
+        hide = new javax.swing.JButton();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        namepanel.setBackground(new java.awt.Color(252, 255, 254));
-        namepanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        apelido.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
-        apelido.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(6, 20, 73), 2, true));
-        apelido.setMargin(new java.awt.Insets(100, 100, 100, 100));
-        namepanel.add(apelido, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 390, 40));
-
-        pangalan.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
-        pangalan.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(6, 20, 73), 2, true));
-        namepanel.add(pangalan, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 390, 40));
-
-        gitna.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
-        gitna.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(6, 20, 73), 2, true));
-        namepanel.add(gitna, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 390, 40));
-
-        cancel.setBackground(new java.awt.Color(255, 102, 102));
-        cancel.setText("CANCEL");
-        cancel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelActionPerformed(evt);
-            }
-        });
-        namepanel.add(cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 300, 150, 30));
-
-        save.setBackground(new java.awt.Color(61, 83, 244));
-        save.setText("SAVE");
-        save.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveActionPerformed(evt);
-            }
-        });
-        namepanel.add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 170, 40));
-
-        getContentPane().add(namepanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, 460, 350));
-
         jPanel1.setBackground(new java.awt.Color(226, 242, 240));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setBackground(new java.awt.Color(61, 83, 244));
-        jButton1.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("UPDATE");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 520, 270, 50));
+        update.setBackground(new java.awt.Color(61, 83, 244));
+        update.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        update.setForeground(new java.awt.Color(255, 255, 255));
+        update.setText("UPDATE");
+        update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateActionPerformed(evt);
+            }
+        });
+        jPanel1.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 530, 270, 50));
 
         idnum.setText("jLabel1");
-        jPanel1.add(idnum, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 100, 170, -1));
-        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 88, 670, 30));
+        jPanel1.add(idnum, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 114, 180, 20));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 88, 690, 20));
 
-        pass.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        pass.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        pass.setText(" CURRENT PASSWORD");
-        pass.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jPanel1.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 340, 460, 50));
+        jLabel9.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(5, 23, 90));
+        jLabel9.setText("PASSWORD");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 160, 40));
 
-        con.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        con.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        con.setText(" CONTACT");
-        con.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jPanel1.add(con, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 270, 460, 50));
+        jLabel6.setFont(new java.awt.Font("Lucida Sans", 1, 10)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(5, 23, 90));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText(" MIDDLE NAME");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 210, 150, 20));
+
+        jLabel5.setFont(new java.awt.Font("Lucida Sans", 1, 10)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(5, 23, 90));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText(" FIRST NAME");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, 200, 20));
 
         jLabel1.setFont(new java.awt.Font("Lucida Sans", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -184,33 +178,85 @@ public class adminUpdate extends javax.swing.JFrame {
         jLabel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, 480, 70));
 
-        name.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
-        name.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        name.setText(" FULLNAME");
-        name.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jPanel1.add(name, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, 460, 50));
+        jLabel4.setFont(new java.awt.Font("Lucida Sans", 1, 10)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(5, 23, 90));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText(" LAST NAME");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 160, 20));
 
-        eadd.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        eadd.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        eadd.setText(" EMAIL ADDRESS");
-        eadd.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jPanel1.add(eadd, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, 460, 50));
+        jLabel8.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(5, 23, 90));
+        jLabel8.setText("EMAIL ADDRESS");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 240, 170, 40));
 
-        edit4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imahe/1x/1x/pen40Asset 3.png"))); // NOI18N
-        edit4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                edit4MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                edit4MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                edit4MouseExited(evt);
+        jLabel7.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(5, 23, 90));
+        jLabel7.setText("CONTACT");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 130, 40));
+
+        first.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        first.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        first.setBorder(null);
+        jPanel1.add(first, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 170, 200, 40));
+
+        last.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        last.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        last.setBorder(null);
+        last.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lastActionPerformed(evt);
             }
         });
-        jPanel1.add(edit4, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 340, 70, 50));
+        jPanel1.add(last, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, 160, 40));
 
-        edit3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imahe/1x/1x/pen40Asset 3.png"))); // NOI18N
+        eadd.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        eadd.setBorder(null);
+        jPanel1.add(eadd, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 300, 300, 40));
+
+        mid.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        mid.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        mid.setBorder(null);
+        mid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                midActionPerformed(evt);
+            }
+        });
+        jPanel1.add(mid, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 170, 150, 40));
+
+        kontak.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        kontak.setBorder(null);
+        jPanel1.add(kontak, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, 190, 40));
+
+        jLabel3.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(5, 23, 90));
+        jLabel3.setText("FULL NAME");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 130, 40));
+
+        show.setBackground(new java.awt.Color(16, 34, 118));
+        show.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        show.setForeground(new java.awt.Color(244, 248, 251));
+        show.setText("SHOW");
+        show.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showActionPerformed(evt);
+            }
+        });
+        jPanel1.add(show, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 430, 90, 40));
+
+        pass.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        pass.setText("jPasswordField1");
+        jPanel1.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 430, 420, 40));
+
+        jSeparator4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Sans", 1, 18), new java.awt.Color(10, 86, 33))); // NOI18N
+        jPanel1.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 410, 560, 80));
+
+        jSeparator3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Sans", 1, 18), new java.awt.Color(10, 86, 33))); // NOI18N
+        jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, 560, 80));
+
+        jSeparator2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Sans", 1, 18), new java.awt.Color(10, 86, 33))); // NOI18N
+        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 560, 90));
+
+        edit3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imahe/1x/1x/pen30Asset 2.png"))); // NOI18N
         edit3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 edit3MouseEntered(evt);
@@ -219,9 +265,14 @@ public class adminUpdate extends javax.swing.JFrame {
                 edit3MouseExited(evt);
             }
         });
-        jPanel1.add(edit3, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 270, 70, 50));
+        edit3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                edit3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(edit3, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 430, 50, 40));
 
-        edit2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imahe/1x/1x/pen40Asset 3.png"))); // NOI18N
+        edit2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imahe/1x/1x/pen30Asset 2.png"))); // NOI18N
         edit2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 edit2MouseEntered(evt);
@@ -230,9 +281,14 @@ public class adminUpdate extends javax.swing.JFrame {
                 edit2MouseExited(evt);
             }
         });
-        jPanel1.add(edit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 200, 70, 50));
+        edit2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                edit2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(edit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 300, 50, 40));
 
-        edit1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imahe/1x/1x/pen40Asset 3.png"))); // NOI18N
+        edit1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imahe/1x/1x/pen30Asset 2.png"))); // NOI18N
         edit1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 edit1MouseEntered(evt);
@@ -246,27 +302,58 @@ public class adminUpdate extends javax.swing.JFrame {
                 edit1ActionPerformed(evt);
             }
         });
-        jPanel1.add(edit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 130, 70, 50));
+        jPanel1.add(edit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 170, 50, 40));
+
+        hide.setBackground(new java.awt.Color(16, 34, 118));
+        hide.setFont(new java.awt.Font("Lucida Sans", 1, 18)); // NOI18N
+        hide.setForeground(new java.awt.Color(244, 248, 251));
+        hide.setText("HIDE");
+        hide.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                hideActionPerformed(evt);
+            }
+        });
+        jPanel1.add(hide, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 430, 90, 40));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imahe/green1kAsset 1.png"))); // NOI18N
-        jPanel1.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, 690, 600));
+        jPanel1.add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 600));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 600));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 600));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void lastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lastActionPerformed
+
+    private void midActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_midActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_midActionPerformed
+
     private void edit1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_edit1MouseEntered
-        edit1.setBackground(Color.white);
+        edit1.setBackground(Color.GRAY);
     }//GEN-LAST:event_edit1MouseEntered
 
     private void edit1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_edit1MouseExited
         edit1.setBackground(new Color(0,0,0,0));
     }//GEN-LAST:event_edit1MouseExited
 
+    private void showActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showActionPerformed
+        pass.setEchoChar((char)0);
+        hide.show();
+        show.hide();
+    }//GEN-LAST:event_showActionPerformed
+
+    private void hideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hideActionPerformed
+        pass.setEchoChar((char)42);
+        hide.hide();
+        show.show();
+    }//GEN-LAST:event_hideActionPerformed
+
     private void edit2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_edit2MouseEntered
-        edit2.setBackground(Color.white);
+        edit2.setBackground(Color.GRAY);
     }//GEN-LAST:event_edit2MouseEntered
 
     private void edit2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_edit2MouseExited
@@ -274,60 +361,74 @@ public class adminUpdate extends javax.swing.JFrame {
     }//GEN-LAST:event_edit2MouseExited
 
     private void edit3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_edit3MouseEntered
-        edit3.setBackground(Color.white);
+        edit3.setBackground(Color.GRAY);
     }//GEN-LAST:event_edit3MouseEntered
 
     private void edit3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_edit3MouseExited
         edit3.setBackground(new Color(0,0,0,0));
     }//GEN-LAST:event_edit3MouseExited
 
-    private void edit4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_edit4MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_edit4MouseClicked
-
-    private void edit4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_edit4MouseEntered
-        edit4.setBackground(Color.white);
-    }//GEN-LAST:event_edit4MouseEntered
-
-    private void edit4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_edit4MouseExited
-        edit4.setBackground(new Color(0,0,0,0));
-    }//GEN-LAST:event_edit4MouseExited
-
-    private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cancelActionPerformed
-
-    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-       String ap = apelido.getText();
-       String pa = pangalan.getText();
-       String gi = gitna.getText();
-       String y = idnum.getText();
-       try{
-         System.out.println(y);
-         String sql  = "update administrator set lastname = '"+ap+"'"+", firstname = '"+pa+"'"+", middlename = '"+gi+"'"+" where id = '"+y;
-         Statement update = myConnection.createStatement();
-         update.executeUpdate(sql);
-         
-         namepanel.hide();
-         edit1.show();
-         edit2.show();
-         edit3.show();
-         edit4.show();
-        
-        
-       }catch (SQLException e){
-           e.printStackTrace();
-       }
-       connect();
-    }//GEN-LAST:event_saveActionPerformed
-
     private void edit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit1ActionPerformed
-        edit1.hide();
-        edit2.hide();
-        edit3.hide();
-        edit4.hide();
-        namepanel.show();
+        last.setFocusable(true);
+        last.setEditable(true);
+        first.setEditable(true);
+        mid.setEditable(true);     
+        last.setBackground(Color.WHITE);
+        first.setBackground(Color.WHITE);
+        mid.setBackground(Color.WHITE);
+        
+        
     }//GEN-LAST:event_edit1ActionPerformed
+
+    private void edit2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit2ActionPerformed
+        kontak.setBackground(Color.WHITE);
+        eadd.setBackground(Color.WHITE);
+        kontak.setEditable(true);
+        eadd.setEditable(true);
+    }//GEN-LAST:event_edit2ActionPerformed
+
+    private void edit3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit3ActionPerformed
+        pass.setBackground(Color.WHITE);
+        pass.setEditable(true);
+    }//GEN-LAST:event_edit3ActionPerformed
+
+    private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
+        String apelido = last.getText().toUpperCase();
+        String pangalan = first.getText().toUpperCase();
+        String gitna = mid.getText().toUpperCase();
+        String cellphone = kontak.getText();
+        String emailadd = eadd.getText();
+        String password = pass.getText();     
+        int lastlength = apelido.length();
+        int firstlength = pangalan.length();
+        int middlelength = gitna.length();
+        int emaillength = emailadd.length();
+        int contlength = cellphone.length();
+        int passlength = password.length();
+        String ako = idnum.getText();
+        try{
+            String me = "update administrator SET id=?,"
+                    + "lastname=?,firstname=?,middlename=?,email=?,password=?,contact=?  WHERE    id='"+ako+"'";
+            PreparedStatement add = myConnection.prepareStatement(me);
+            //ResultSet rs = add.executeUpdate(me);
+            add.setString(1, ako);
+            add.setString(2, apelido);
+            add.setString(3, pangalan);
+            add.setString(4, gitna);
+            add.setString(5, emailadd);
+            add.setString(6, password);
+            add.setString(7, cellphone);
+            add.executeUpdate();
+            String person = idnum.getText();
+            frontPage input = new frontPage();
+                input.idn.setText(person); 
+                this.dispose();
+                new frontPage(person).show();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        connect();
+    }//GEN-LAST:event_updateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -365,25 +466,32 @@ public class adminUpdate extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField apelido;
     private javax.swing.JLabel background;
-    private javax.swing.JButton cancel;
-    private javax.swing.JLabel con;
-    private javax.swing.JLabel eadd;
+    private javax.swing.JTextField eadd;
     private javax.swing.JButton edit1;
     private javax.swing.JButton edit2;
     private javax.swing.JButton edit3;
-    private javax.swing.JButton edit4;
-    private javax.swing.JTextField gitna;
+    private javax.swing.JTextField first;
+    private javax.swing.JButton hide;
     public static javax.swing.JLabel idnum;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel name;
-    private javax.swing.JPanel namepanel;
-    private javax.swing.JTextField pangalan;
-    private javax.swing.JLabel pass;
-    private javax.swing.JButton save;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JTextField kontak;
+    private javax.swing.JTextField last;
+    private javax.swing.JTextField mid;
+    private javax.swing.JPasswordField pass;
+    private javax.swing.JButton show;
+    private javax.swing.JButton update;
     // End of variables declaration//GEN-END:variables
 }
