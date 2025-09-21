@@ -1,7 +1,7 @@
 
----
-
-### 🆔 `tempoID` README
+###################
+Student Temporary ID Generator
+###################
 
 ```markdown
 # TempoID
