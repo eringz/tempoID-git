@@ -1,17 +1,14 @@
-
----
-
-## 🆔 `tempoID` README  
+ 
 
 ```markdown
-# 🆔 TempoID
+## 🆔 TempoID
 
 A lightweight employee attendance and identification system with **QR code scanning** and **attendance analytics**.  
 Built to simplify workforce monitoring with real-time logs.
 
 ---
 
-## 🚀 Features
+** 🚀 Features
 
 - 📱 QR code scanning for fast check-in/out  
 - 🕒 Attendance tracking & logs  
@@ -21,7 +18,7 @@ Built to simplify workforce monitoring with real-time logs.
 
 ---
 
-## 🛠️ Tech Stack
+** 🛠️ Tech Stack
 
 - **Backend:** PHP (CodeIgniter or Laravel)  
 - **Database:** MySQL  
@@ -29,7 +26,7 @@ Built to simplify workforce monitoring with real-time logs.
 
 ---
 
-## ⚡ Installation & Setup
+** ⚡ Installation & Setup
 
 1. Clone the repository:
    ```bash
