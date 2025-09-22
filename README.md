@@ -13,16 +13,12 @@ Built to simplify workforce monitoring with real-time logs.
 - Attendance reports for admins  
 - Responsive interface for mobile & desktop  
 
----
-
-
 # Tech Stack
 
 - **Backend:** PHP (CodeIgniter or Laravel)  
 - **Database:** MySQL  
 - **Frontend:** HTML, CSS, Bootstrap, jQuery, AJAX  
 
----
 
 # Installation and setup
 
