@@ -15,9 +15,8 @@ Built to simplify workforce monitoring with real-time logs.
 
 ---
 
-**********
-Tech Stack
-**********
+
+#Tech Stack
 
 - **Backend:** PHP (CodeIgniter or Laravel)  
 - **Database:** MySQL  
