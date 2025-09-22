@@ -1,4 +1,4 @@
- ## TempoID
+ # TempoID
 
 A lightweight employee attendance and identification system with **QR code scanning** and **attendance analytics**.  
 Built to simplify workforce monitoring with real-time logs.
