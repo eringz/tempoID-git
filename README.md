@@ -5,7 +5,7 @@ Built to simplify workforce monitoring with real-time logs.
 
 ---
 
-**  Features
+## Features
 
 - QR code scanning for fast check-in/out  
 - Attendance tracking & logs  
